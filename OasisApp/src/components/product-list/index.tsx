@@ -5,6 +5,9 @@ import { fetchProducts } from '../../services/fetchProducts';
 import './styles.scss';
 import { useRecoilState } from 'recoil';
 import { selectedProductsState } from '../../atoms/cartAtom';
+import { userState } from '../../atoms/sessionState';
+import { useNavigate, useParams } from 'react-router-dom';
+
 
 
 const ProductListComponent = () => {
@@ -17,6 +20,8 @@ const ProductListComponent = () => {
     const [selectedProducts, setSelectedProducts] = useRecoilState(selectedProductsState);
     const [showNotification, setShowNotification] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
+    const [user, setUser] = useRecoilState(userState);  // Estado de sesión
+    const navigate = useNavigate();
 
     useEffect(() => {
         const loadProducts = async () => {
@@ -79,6 +84,12 @@ const ProductListComponent = () => {
     };
 
     const addProductToCart = (productToAdd: Product) => {
+        if (!user.isLoggedIn) {
+            // Si no está logueado, redirige al login
+            navigate('/login');
+            return;
+        }
+
         setSelectedProducts(prevProducts => {
             const existingProductIndex = prevProducts.findIndex(p => p.id === productToAdd.id);
             if (existingProductIndex !== -1) {

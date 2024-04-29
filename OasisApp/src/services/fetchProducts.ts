@@ -13,7 +13,7 @@ export const fetchProducts = async (): Promise<Product[]> => {
     console.error('Error fetching products:', error);
     throw error;
   }
-}
+};
 
 
 export const fetchCustomItems = async (): Promise<CustomItem[]> => {
@@ -26,25 +26,16 @@ export const fetchCustomItems = async (): Promise<CustomItem[]> => {
   }
 };
 
-export const fetchWrappingPaper = async (): Promise<WrappingPaper[]> => {
+export const fetchUsers = async () => {
   try {
-    const response = await axios.get<{ papel: WrappingPaper[] }>('/data/customItems.json');
-    return response.data.papel; // Asegúrate de que la estructura de respuesta coincida con esta.
+    const response = await axios.get('/data/users.json'); // Asegúrate de que la ruta al archivo JSON sea correcta
+    return response.data;
   } catch (error) {
-    console.error('Error fetching papel:', error);
+    console.error('Error fetching users:', error);
     throw error;
   }
 };
 
-export const fetchFollaje = async (): Promise<Follaje[]> => {
-  try {
-    const response = await axios.get<{ follaje: Follaje[] }>('/data/customItems.json');
-    return response.data.follaje; // Asegúrate de que la estructura de respuesta coincida con esta.
-  } catch (error) {
-    console.error('Error fetching flowers:', error);
-    throw error;
-  }
-};
 
 
 

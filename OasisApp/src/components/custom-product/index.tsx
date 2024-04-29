@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Product } from '../../types/types';
 import { CustomItem } from '../../types/types';
 import { WrappingPaper } from '../../types/types';
@@ -11,6 +11,7 @@ import { fetchFollaje } from '../../services/fetchProducts';
 import './styles.scss';
 import { useRecoilState } from 'recoil';
 import { selectedProductsState } from '../../atoms/cartAtom';
+import { userState } from '../../atoms/sessionState';
 
 const CustomProduct = () => {
     const [flowers, setFlowers] = useState<CustomItem[]>([]);
@@ -25,6 +26,8 @@ const CustomProduct = () => {
     const [customItems, setCustomItems] = useState<CustomItem[]>([]);
     const [showNotification, setShowNotification] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
+    const [user, setUser] = useRecoilState(userState);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const loadCustomProducts = async () => {
@@ -76,6 +79,12 @@ const CustomProduct = () => {
     };
 
     const createCustomProduct = () => {
+        if (!user.isLoggedIn) {
+            // Si no está logueado, redirige al login
+            navigate('/login');
+            return;
+        }
+
         if (flowerCount < 1 || paperCount < 1 || follajeCount < 1) {
             alert("Debe seleccionar al menos una flor, un papel y un follaje.");
             return;

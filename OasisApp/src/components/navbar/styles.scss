@@ -1,3 +1,5 @@
+@import '../../styles/global.scss';
+
 .navbar {
     position: fixed;
     display: flex;
@@ -8,7 +10,12 @@
     width: -webkit-fill-available;
     z-index: 999;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    //padding-bottom: 2rem;
+    // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+
+    &.scrolled {
+        background-color: rgba(255, 255, 255, 0.8); // Blanco con transparencia cuando se hace scroll
+    }
 
     .logo {
         //margin-left: 1rem;
@@ -38,10 +45,11 @@
         padding-top: 0.4rem;
         font-size: 18px;
 
-        li {
+        .link-tabs {
             margin: 0 10px;
 
-            a {
+            a,
+            Link {
                 text-decoration: none;
                 color: black;
                 font-weight: bold;
@@ -54,10 +62,23 @@
     }
 
     .cartIcon {
+        cursor: pointer;
+
         img {
             padding-top: 1rem;
             height: 35px;
             margin-left: 2rem;
+        }
+
+        .cart-count {
+            position: absolute;
+
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+            line-height: 1;
         }
     }
 
@@ -113,4 +134,74 @@
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
     padding: 10px;
     z-index: 100; // Asegura que el modal esté sobre otros elementos
+}
+
+.user-menu {
+    position: relative;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+
+    .userImg {
+        // padding-top: 30px;
+        width: 25px;
+        height: auto;
+        padding-right: 10px;
+    }
+
+    .dropdown-menu {
+        display: none; // Escondido por defecto
+        position: absolute;
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        width: 170px; // Ajusta según tus necesidades
+        z-index: 100;
+        margin-top: 1rem;
+        font-weight: 200;
+
+        .element-dm {
+            padding: 8px;
+            list-style: none;
+            text-decoration: none;
+            color: black;
+            //padding-left: 45px;
+
+            &:hover {
+                background-color: #f0f0f0;
+            }
+
+            .clasea-test {
+                text-decoration: none;
+                color: black;
+                //padding-left: 10px;
+            }
+        }
+
+        .plain-button {
+            background: none; // Elimina el fondo
+            border: none; // Elimina el borde
+            padding: 0; // Elimina el padding
+            margin: 0; // Elimina los márgenes
+            color: inherit; // Hereda el color del texto del elemento padre
+            font: inherit; // Hereda la fuente del elemento padre
+            cursor: pointer; // Mantiene el cursor como puntero para indicar que es clickeable
+            outline: none; // Elimina el contorno que aparece al enfocar el botón
+
+            &:hover,
+            &:active,
+            &:focus {
+                background: none; // Asegura que no haya ningún efecto de fondo al interactuar
+                box-shadow: none; // Elimina cualquier sombra
+            }
+        }
+    }
+
+    .show {
+        display: block; // Mostrar cuando se activa
+    }
+}
+
+.normalText {
+    font-weight: 200;
 }

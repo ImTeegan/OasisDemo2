@@ -6,7 +6,7 @@ import './styles.scss';
 import shoppingBag from '../../../public/icons/shoppingBag.png';
 import { useRecoilState } from 'recoil';
 import { selectedProductsState } from '../../atoms/cartAtom';
-import { isLoggedInState } from '../../atoms/sessionState';
+import { userState } from '../../atoms/sessionState';
 
 
 const ProductDetailsComponent: React.FC = () => {
@@ -16,7 +16,7 @@ const ProductDetailsComponent: React.FC = () => {
     const [quantity, setQuantity] = useState(1);
     const [showNotification, setShowNotification] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);  // Estado de sesión
+    const [user, setUser] = useRecoilState(userState);   // Estado de sesión
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -34,7 +34,7 @@ const ProductDetailsComponent: React.FC = () => {
     }, [id]);
 
     const addProductToCart = () => {
-        if (!isLoggedIn) {
+        if (!user.isLoggedIn) {
             // Si no está logueado, redirige al login
             navigate('/login');
             return;

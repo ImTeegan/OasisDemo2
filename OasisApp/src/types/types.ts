@@ -18,4 +18,10 @@ export interface CustomItem {
   tipo: string;
 }
 
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+}
 

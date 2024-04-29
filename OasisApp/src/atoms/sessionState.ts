@@ -1,6 +1,15 @@
 import { atom } from 'recoil';
 
-export const isLoggedInState = atom({
-    key: 'isLoggedIn',
-    default: false,  // por defecto, el usuario no está logueado
+import { recoilPersist } from 'recoil-persist';
+
+// Configura la persistencia
+const { persistAtom } = recoilPersist({
+    key: 'recoilPersist', // key para el almacenamiento local
+    storage: localStorage, // Opcionalmente, puedes cambiar a sessionStorage
+});
+
+export const userState = atom({
+    key: 'userState',
+    default: { isLoggedIn: false, name: '' },
+    effects_UNSTABLE: [persistAtom],
 });

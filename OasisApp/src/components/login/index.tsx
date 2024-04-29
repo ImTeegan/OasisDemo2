@@ -1,23 +1,39 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate en lugar de useHistory
+import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
-import { isLoggedInState } from '../../atoms/sessionState'; // Asegúrate de que la ruta al atom es correcta
+import { userState } from '../../atoms/sessionState';
+import { fetchUsers } from '../../services/fetchProducts'; // Importa la función fetchUsers
 import './styles.scss';
-
 
 const LoginComponent = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const setIsLoggedIn = useSetRecoilState(isLoggedInState);
-    const navigate = useNavigate(); // Cambia useHistory por useNavigate
+    const setUser = useSetRecoilState(userState);
+    const navigate = useNavigate();
 
-    const handleLogin = (event) => {
+    const handleLogin = async (event) => {
         event.preventDefault();
-        if (username && password) {
-            setIsLoggedIn(true);  // Actualiza el estado global a logueado
-            navigate('/');  // Uso de navigate en lugar de history.push
+
+        const emailRegex = /^\S+@\S+\.\S+$/;
+        if (!emailRegex.test(username)) {
+            alert('Por favor, ingrese un correo electrónico válido.');
+            return;
+        }
+
+        if (password.length < 8) {
+            alert('La contraseña debe tener al menos 8 caracteres.');
+            return;
+        }
+
+        // Obtiene los usuarios del archivo JSON
+        const users = await fetchUsers();
+        const userExists = users.find(user => user.email === username && user.password === password);
+
+        if (userExists) {
+            setUser({ isLoggedIn: true, name: userExists.name });   // Actualiza el estado global a logueado
+            navigate('/');  // Navega al inicio
         } else {
-            alert('Por favor, ingrese todos los campos.');
+            alert('Credenciales incorrectas, por favor intente de nuevo.');
         }
     };
 
@@ -26,9 +42,9 @@ const LoginComponent = () => {
             <h1>Iniciar Sesión</h1>
             <form onSubmit={handleLogin}>
                 <label>
-                    Nombre de usuario:
+                    Nombre de usuario (Correo Electrónico):
                     <input
-                        type="text"
+                        type="email"
                         value={username}
                         onChange={e => setUsername(e.target.value)}
                         required
