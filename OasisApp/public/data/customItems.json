@@ -1,0 +1,282 @@
+[
+    {
+        "id": 1,
+        "nombre": "Rosa Roja",
+        "precio": 10500,
+        "imagen": "/images/rosaroja.jpg",
+        "tipo": "flor"
+    },
+    {
+        "id": 2,
+        "nombre": "Tulipán Amarillo",
+        "precio": 11500,
+        "imagen": "/images/tulipanamarillo.jpg",
+        "tipo": "flor"
+    },
+    {
+        "id": 3,
+        "nombre": "Lirio Blanco",
+        "precio": 12000,
+        "imagen": "/images/lirioblanco.jpg",
+        "tipo": "flor"
+    },
+    {
+        "id": 4,
+        "nombre": "Margarita Azul",
+        "precio": 13000,
+        "imagen": "linkaqui",
+        "tipo": "flor"
+    },
+    {
+        "id": 5,
+        "nombre": "Orquídea Púrpura",
+        "precio": 18000,
+        "imagen": "linkaqui",
+        "tipo": "flor"
+    },
+    {
+        "id": 6,
+        "nombre": "Clavel Rosa",
+        "precio": 14000,
+        "imagen": "linkaqui",
+        "tipo": "flor"
+    },
+    {
+        "id": 7,
+        "nombre": "Girasol Grande",
+        "precio": 17000,
+        "imagen": "linkaqui",
+        "tipo": "flor"
+    },
+    {
+        "id": 8,
+        "nombre": "Peonía Coral",
+        "precio": 20000,
+        "imagen": "linkaqui",
+        "tipo": "flor"
+    },
+    {
+        "id": 9,
+        "nombre": "Gerbera Naranja",
+        "precio": 15000,
+        "imagen": "linkaqui",
+        "tipo": "flor"
+    },
+    {
+        "id": 10,
+        "nombre": "Dalia Roja",
+        "precio": 19000,
+        "imagen": "linkaqui",
+        "tipo": "flor"
+    },
+    {
+        "id": 11,
+        "nombre": "Azalea Rosa",
+        "precio": 16500,
+        "imagen": "linkaqui",
+        "tipo": "flor"
+    },
+    {
+        "id": 12,
+        "nombre": "Fresia Amarilla",
+        "precio": 13500,
+        "imagen": "linkaqui",
+        "tipo": "flor"
+    },
+    {
+        "id": 13,
+        "nombre": "Camelia Blanca",
+        "precio": 11000,
+        "imagen": "linkaqui",
+        "tipo": "flor"
+    },
+    {
+        "id": 14,
+        "nombre": "Begonia Roja",
+        "precio": 12500,
+        "imagen": "linkaqui",
+        "tipo": "flor"
+    },
+    {
+        "id": 15,
+        "nombre": "Jazmín Morado",
+        "precio": 11500,
+        "imagen": "linkaqui",
+        "tipo": "flor"
+    },
+    {
+        "id": 16,
+        "nombre": "Papel estrellado",
+        "precio": 1500,
+        "imagen": "linkaqui",
+        "tipo": "papel"
+    },
+    {
+        "id": 17,
+        "nombre": "Papel metálico",
+        "precio": 2500,
+        "imagen": "linkaqui",
+        "tipo": "papel"
+    },
+    {
+        "id": 18,
+        "nombre": "Papel Kraft",
+        "precio": 2000,
+        "imagen": "linkaqui",
+        "tipo": "papel"
+    },
+    {
+        "id": 19,
+        "nombre": "Papel brillante",
+        "precio": 3500,
+        "imagen": "linkaqui",
+        "tipo": "papel"
+    },
+    {
+        "id": 20,
+        "nombre": "Papel de seda",
+        "precio": 1800,
+        "imagen": "linkaqui",
+        "tipo": "papel"
+    },
+    {
+        "id": 21,
+        "nombre": "Papel reciclado",
+        "precio": 3200,
+        "imagen": "linkaqui",
+        "tipo": "papel"
+    },
+    {
+        "id": 22,
+        "nombre": "Papel de arroz",
+        "precio": 2900,
+        "imagen": "linkaqui",
+        "tipo": "papel"
+    },
+    {
+        "id": 23,
+        "nombre": "Papel perlado",
+        "precio": 4500,
+        "imagen": "linkaqui",
+        "tipo": "papel"
+    },
+    {
+        "id": 24,
+        "nombre": "Papel mate",
+        "precio": 4100,
+        "imagen": "linkaqui",
+        "tipo": "papel"
+    },
+    {
+        "id": 25,
+        "nombre": "Papel holográfico",
+        "precio": 2200,
+        "imagen": "linkaqui",
+        "tipo": "papel"
+    },
+    {
+        "id": 26,
+        "nombre": "Papel de lunares",
+        "precio": 4700,
+        "imagen": "linkaqui",
+        "tipo": "papel"
+    },
+    {
+        "id": 27,
+        "nombre": "Papel de rayas",
+        "precio": 2600,
+        "imagen": "linkaqui",
+        "tipo": "papel"
+    },
+    {
+        "id": 28,
+        "nombre": "Papel acuarelado",
+        "precio": 3400,
+        "imagen": "linkaqui",
+        "tipo": "papel"
+    },
+    {
+        "id": 29,
+        "nombre": "Papel con textura",
+        "precio": 3900,
+        "imagen": "linkaqui",
+        "tipo": "papel"
+    },
+    {
+        "id": 30,
+        "nombre": "Papel fotográfico",
+        "precio": 2100,
+        "imagen": "linkaqui",
+        "tipo": "papel"
+    },
+    {
+        "id": 31,
+        "nombre": "Pampa grass",
+        "precio": 6500,
+        "imagen": "linkaqui",
+        "tipo": "follaje"
+    },
+    {
+        "id": 32,
+        "nombre": "Helecho",
+        "precio": 7500,
+        "imagen": "linkaqui",
+        "tipo": "follaje"
+    },
+    {
+        "id": 33,
+        "nombre": "Hiedra",
+        "precio": 8000,
+        "imagen": "linkaqui",
+        "tipo": "follaje"
+    },
+    {
+        "id": 34,
+        "nombre": "Eucalipto",
+        "precio": 8500,
+        "imagen": "linkaqui",
+        "tipo": "follaje"
+    },
+    {
+        "id": 35,
+        "nombre": "Musgo",
+        "precio": 7000,
+        "imagen": "linkaqui",
+        "tipo": "follaje"
+    },
+    {
+        "id": 36,
+        "nombre": "Monstera",
+        "precio": 9500,
+        "imagen": "linkaqui",
+        "tipo": "follaje"
+    },
+    {
+        "id": 37,
+        "nombre": "Bambú",
+        "precio": 10000,
+        "imagen": "linkaqui",
+        "tipo": "follaje"
+    },
+    {
+        "id": 38,
+        "nombre": "Palma",
+        "precio": 11000,
+        "imagen": "linkaqui",
+        "tipo": "follaje"
+    },
+    {
+        "id": 39,
+        "nombre": "Ficus",
+        "precio": 10500,
+        "imagen": "linkaqui",
+        "tipo": "follaje"
+    },
+    {
+        "id": 40,
+        "nombre": "Suculenta",
+        "precio": 9500,
+        "imagen": "linkaqui",
+        "tipo": "follaje"
+    }
+]

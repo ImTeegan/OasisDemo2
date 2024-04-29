@@ -1,0 +1,101 @@
+@import '../../styles/global.scss';
+
+.productDetails {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 4rem;
+    padding-bottom: 4rem;
+
+    &__containerimg {
+        padding-top: 7rem;
+
+        img {
+            //display: flex;
+            width: 700px;
+            height: auto;
+            //justify-content: center;
+        }
+    }
+
+    &__containerdetails {
+        padding-top: 5rem;
+        display: flex;
+        flex-direction: column;
+
+        h1 {
+            font-size: 48px;
+        }
+
+        &__cat {
+            font-size: 18px;
+            font-style: italic;
+        }
+
+        &__des {
+            font-size: 25px;
+        }
+
+        &__price {
+            font-size: 50px;
+            color: $color-paleta2-2;
+        }
+
+        button {
+            width: 70%;
+            align-self: center;
+            margin-top: 8rem;
+            background-color: $color-paleta2-4;
+            color: $color-paleta2-2;
+            font-weight: bold;
+            border: none;
+            padding: 10px 20px;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            outline: none;
+
+            img {
+                width: 2rem;
+                margin-left: 2rem;
+
+            }
+        }
+
+        button:hover {
+            background-color: $color-paleta2-2;
+            color: $color-paleta2-4;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        button:focus {
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+        }
+    }
+}
+
+.notification {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-paleta2-2;
+    color: $color-paleta2-4;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    visibility: hidden;
+    font-size: 25px;
+    /* oculta inicialmente */
+    opacity: 0;
+    transition: opacity 0.5s, visibility 0.5s;
+}
+
+.notification.show {
+    visibility: visible;
+    opacity: 1;
+}

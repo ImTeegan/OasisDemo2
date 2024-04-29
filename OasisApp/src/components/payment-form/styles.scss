@@ -1,0 +1,28 @@
+.paymentForm {
+    padding-top: 10rem;
+}
+
+.card-number-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.card-number-input input {
+    padding-right: 50px;
+    /* Asegura espacio para el logo */
+    width: 100%;
+}
+
+.card-logo {
+    position: absolute;
+    right: 10px;
+    /* Posiciona el logo dentro del input, a la derecha */
+    height: 30px;
+    /* Ajusta según el tamaño deseado para los logos */
+}
+
+.card-logo img {
+    height: 100%;
+    /* Asegura que el logo tenga el tamaño correcto */
+}

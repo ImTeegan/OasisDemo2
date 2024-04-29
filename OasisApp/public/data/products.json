@@ -1,0 +1,602 @@
+[
+  {
+    "productName": "Margarita",
+    "category": "Ramo",
+    "price": 46160,
+    "image1": "/images/flor1.1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Margarita es perfecto para cualquier ocasi\u00f3n, brindando un toque de elegancia y color.",
+    "id": 1
+  },
+  {
+    "productName": "Jazm\u00edn",
+    "category": "Arreglo",
+    "price": 42130,
+    "image1": "/images/flor2.1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Jazm\u00edn, con sus vibrantes colores, es ideal para decorar cualquier espacio.",
+    "id": 2
+  },
+  {
+    "productName": "Girasol",
+    "category": "Arreglo",
+    "price": 22210,
+    "image1": "/images/flor3.1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Celebra momentos especiales con un hermoso Girasol, s\u00edmbolo de amor y aprecio.",
+    "id": 3
+  },
+  {
+    "productName": "Amapola",
+    "category": "Plantas",
+    "price": 52920,
+    "image1": "/images/flor4.1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Amapola seleccionado con cuidado para garantizar su frescura y belleza duradera.",
+    "id": 4
+  },
+  {
+    "productName": "Girasol",
+    "category": "Oficina",
+    "price": 83390,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Celebra momentos especiales con un hermoso Girasol, s\u00edmbolo de amor y aprecio.",
+    "id": 5
+  },
+  {
+    "productName": "Lirio",
+    "category": "Oficina",
+    "price": 51880,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Disfruta de la belleza y la frescura del Lirio en tu hogar o oficina.",
+    "id": 6
+  },
+  {
+    "productName": "Girasol",
+    "category": "Ramo",
+    "price": 27500,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Celebra momentos especiales con un hermoso Girasol, s\u00edmbolo de amor y aprecio.",
+    "id": 7
+  },
+  {
+    "productName": "Tulip\u00e1n",
+    "category": "Oficina",
+    "price": 22680,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Tulip\u00e1n seleccionado con cuidado para garantizar su frescura y belleza duradera.",
+    "id": 8
+  },
+  {
+    "productName": "Margarita",
+    "category": "Arreglo",
+    "price": 69110,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Margarita seleccionado con cuidado para garantizar su frescura y belleza duradera.",
+    "id": 9
+  },
+  {
+    "productName": "Orqu\u00eddea",
+    "category": "Arreglo",
+    "price": 78360,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Orqu\u00eddea es perfecto para cualquier ocasi\u00f3n, brindando un toque de elegancia y color.",
+    "id": 10
+  },
+  {
+    "productName": "Margarita",
+    "category": "Plantas",
+    "price": 49040,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Margarita, con sus vibrantes colores, es ideal para decorar cualquier espacio.",
+    "id": 11
+  },
+  {
+    "productName": "Margarita",
+    "category": "Arreglo",
+    "price": 30550,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Celebra momentos especiales con un hermoso Margarita, s\u00edmbolo de amor y aprecio.",
+    "id": 12
+  },
+  {
+    "productName": "Lirio",
+    "category": "Ramo",
+    "price": 75610,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Disfruta de la belleza y la frescura del Lirio en tu hogar o oficina.",
+    "id": 13
+  },
+  {
+    "productName": "Clavel",
+    "category": "Arreglo",
+    "price": 83610,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Clavel, con sus vibrantes colores, es ideal para decorar cualquier espacio.",
+    "id": 14
+  },
+  {
+    "productName": "Jazm\u00edn",
+    "category": "Plantas",
+    "price": 76500,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Jazm\u00edn, con sus vibrantes colores, es ideal para decorar cualquier espacio.",
+    "id": 15
+  },
+  {
+    "productName": "Azucena",
+    "category": "Ramo",
+    "price": 16630,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Azucena seleccionado con cuidado para garantizar su frescura y belleza duradera.",
+    "id": 16
+  },
+  {
+    "productName": "Rosa",
+    "category": "Plantas",
+    "price": 80420,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Rosa es perfecto para cualquier ocasi\u00f3n, brindando un toque de elegancia y color.",
+    "id": 17
+  },
+  {
+    "productName": "Amapola",
+    "category": "Plantas",
+    "price": 61080,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Amapola seleccionado con cuidado para garantizar su frescura y belleza duradera.",
+    "id": 18
+  },
+  {
+    "productName": "Margarita",
+    "category": "Arreglo",
+    "price": 75420,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Disfruta de la belleza y la frescura del Margarita en tu hogar o oficina.",
+    "id": 19
+  },
+  {
+    "productName": "Amapola",
+    "category": "Plantas",
+    "price": 15050,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Celebra momentos especiales con un hermoso Amapola, s\u00edmbolo de amor y aprecio.",
+    "id": 20
+  },
+  {
+    "productName": "Azucena",
+    "category": "Oficina",
+    "price": 44450,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Azucena es perfecto para cualquier ocasi\u00f3n, brindando un toque de elegancia y color.",
+    "id": 21
+  },
+  {
+    "productName": "Jazm\u00edn",
+    "category": "Ramo",
+    "price": 25510,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Disfruta de la belleza y la frescura del Jazm\u00edn en tu hogar o oficina.",
+    "id": 22
+  },
+  {
+    "productName": "Azucena",
+    "category": "Arreglo",
+    "price": 53520,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Disfruta de la belleza y la frescura del Azucena en tu hogar o oficina.",
+    "id": 23
+  },
+  {
+    "productName": "Azucena",
+    "category": "Oficina",
+    "price": 29790,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Celebra momentos especiales con un hermoso Azucena, s\u00edmbolo de amor y aprecio.",
+    "id": 24
+  },
+  {
+    "productName": "Lirio",
+    "category": "Arreglo",
+    "price": 59810,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Lirio seleccionado con cuidado para garantizar su frescura y belleza duradera.",
+    "id": 25
+  },
+  {
+    "productName": "Lirio",
+    "category": "Ramo",
+    "price": 58530,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Celebra momentos especiales con un hermoso Lirio, s\u00edmbolo de amor y aprecio.",
+    "id": 26
+  },
+  {
+    "productName": "Orqu\u00eddea",
+    "category": "Ramo",
+    "price": 68970,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Orqu\u00eddea es perfecto para cualquier ocasi\u00f3n, brindando un toque de elegancia y color.",
+    "id": 27
+  },
+  {
+    "productName": "Girasol",
+    "category": "Plantas",
+    "price": 59080,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Girasol, con sus vibrantes colores, es ideal para decorar cualquier espacio.",
+    "id": 28
+  },
+  {
+    "productName": "Rosa",
+    "category": "Plantas",
+    "price": 81590,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Rosa es perfecto para cualquier ocasi\u00f3n, brindando un toque de elegancia y color.",
+    "id": 29
+  },
+  {
+    "productName": "Amapola",
+    "category": "Ramo",
+    "price": 34060,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Amapola seleccionado con cuidado para garantizar su frescura y belleza duradera.",
+    "id": 30
+  },
+  {
+    "productName": "Azucena",
+    "category": "Ramo",
+    "price": 46570,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Azucena seleccionado con cuidado para garantizar su frescura y belleza duradera.",
+    "id": 31
+  },
+  {
+    "productName": "Rosa",
+    "category": "Ramo",
+    "price": 26010,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Celebra momentos especiales con un hermoso Rosa, s\u00edmbolo de amor y aprecio.",
+    "id": 32
+  },
+  {
+    "productName": "Lirio",
+    "category": "Plantas",
+    "price": 21240,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Lirio es perfecto para cualquier ocasi\u00f3n, brindando un toque de elegancia y color.",
+    "id": 33
+  },
+  {
+    "productName": "Amapola",
+    "category": "Oficina",
+    "price": 42780,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Amapola es perfecto para cualquier ocasi\u00f3n, brindando un toque de elegancia y color.",
+    "id": 34
+  },
+  {
+    "productName": "Amapola",
+    "category": "Arreglo",
+    "price": 32460,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Amapola es perfecto para cualquier ocasi\u00f3n, brindando un toque de elegancia y color.",
+    "id": 35
+  },
+  {
+    "productName": "Tulip\u00e1n",
+    "category": "Ramo",
+    "price": 66900,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Tulip\u00e1n, con sus vibrantes colores, es ideal para decorar cualquier espacio.",
+    "id": 36
+  },
+  {
+    "productName": "Azucena",
+    "category": "Ramo",
+    "price": 31080,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Azucena es perfecto para cualquier ocasi\u00f3n, brindando un toque de elegancia y color.",
+    "id": 37
+  },
+  {
+    "productName": "Rosa",
+    "category": "Oficina",
+    "price": 51590,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Rosa seleccionado con cuidado para garantizar su frescura y belleza duradera.",
+    "id": 38
+  },
+  {
+    "productName": "Margarita",
+    "category": "Ramo",
+    "price": 54170,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Celebra momentos especiales con un hermoso Margarita, s\u00edmbolo de amor y aprecio.",
+    "id": 39
+  },
+  {
+    "productName": "Margarita",
+    "category": "Ramo",
+    "price": 67150,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Margarita seleccionado con cuidado para garantizar su frescura y belleza duradera.",
+    "id": 40
+  },
+  {
+    "productName": "Tulip\u00e1n",
+    "category": "Ramo",
+    "price": 58310,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Tulip\u00e1n seleccionado con cuidado para garantizar su frescura y belleza duradera.",
+    "id": 41
+  },
+  {
+    "productName": "Orqu\u00eddea",
+    "category": "Ramo",
+    "price": 25910,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Orqu\u00eddea, con sus vibrantes colores, es ideal para decorar cualquier espacio.",
+    "id": 42
+  },
+  {
+    "productName": "Tulip\u00e1n",
+    "category": "Arreglo",
+    "price": 77400,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Disfruta de la belleza y la frescura del Tulip\u00e1n en tu hogar o oficina.",
+    "id": 43
+  },
+  {
+    "productName": "Amapola",
+    "category": "Ramo",
+    "price": 38770,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Amapola seleccionado con cuidado para garantizar su frescura y belleza duradera.",
+    "id": 44
+  },
+  {
+    "productName": "Jazm\u00edn",
+    "category": "Arreglo",
+    "price": 29370,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Jazm\u00edn seleccionado con cuidado para garantizar su frescura y belleza duradera.",
+    "id": 45
+  },
+  {
+    "productName": "Clavel",
+    "category": "Plantas",
+    "price": 17720,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Celebra momentos especiales con un hermoso Clavel, s\u00edmbolo de amor y aprecio.",
+    "id": 46
+  },
+  {
+    "productName": "Jazm\u00edn",
+    "category": "Arreglo",
+    "price": 60760,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Jazm\u00edn es perfecto para cualquier ocasi\u00f3n, brindando un toque de elegancia y color.",
+    "id": 47
+  },
+  {
+    "productName": "Clavel",
+    "category": "Oficina",
+    "price": 69540,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Clavel, con sus vibrantes colores, es ideal para decorar cualquier espacio.",
+    "id": 48
+  },
+  {
+    "productName": "Tulip\u00e1n",
+    "category": "Arreglo",
+    "price": 48240,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Tulip\u00e1n, con sus vibrantes colores, es ideal para decorar cualquier espacio.",
+    "id": 49
+  },
+  {
+    "productName": "Lirio",
+    "category": "Oficina",
+    "price": 33880,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Celebra momentos especiales con un hermoso Lirio, s\u00edmbolo de amor y aprecio.",
+    "id": 50
+  },
+  {
+    "productName": "Rosa",
+    "category": "Plantas",
+    "price": 42430,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Rosa es perfecto para cualquier ocasi\u00f3n, brindando un toque de elegancia y color.",
+    "id": 51
+  },
+  {
+    "productName": "Amapola",
+    "category": "Arreglo",
+    "price": 20850,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Disfruta de la belleza y la frescura del Amapola en tu hogar o oficina.",
+    "id": 52
+  },
+  {
+    "productName": "Orqu\u00eddea",
+    "category": "Arreglo",
+    "price": 36030,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Orqu\u00eddea seleccionado con cuidado para garantizar su frescura y belleza duradera.",
+    "id": 53
+  },
+  {
+    "productName": "Rosa",
+    "category": "Arreglo",
+    "price": 69930,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Celebra momentos especiales con un hermoso Rosa, s\u00edmbolo de amor y aprecio.",
+    "id": 54
+  },
+  {
+    "productName": "Orqu\u00eddea",
+    "category": "Ramo",
+    "price": 62780,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Disfruta de la belleza y la frescura del Orqu\u00eddea en tu hogar o oficina.",
+    "id": 55
+  },
+  {
+    "productName": "Rosa",
+    "category": "Plantas",
+    "price": 43480,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Rosa seleccionado con cuidado para garantizar su frescura y belleza duradera.",
+    "id": 56
+  },
+  {
+    "productName": "Azucena",
+    "category": "Oficina",
+    "price": 51460,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Azucena seleccionado con cuidado para garantizar su frescura y belleza duradera.",
+    "id": 57
+  },
+  {
+    "productName": "Clavel",
+    "category": "Oficina",
+    "price": 30450,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Clavel, con sus vibrantes colores, es ideal para decorar cualquier espacio.",
+    "id": 58
+  },
+  {
+    "productName": "Girasol",
+    "category": "Oficina",
+    "price": 67820,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "Girasol seleccionado con cuidado para garantizar su frescura y belleza duradera.",
+    "id": 59
+  },
+  {
+    "productName": "Ramo Personalizado",
+    "category": "Ramo",
+    "price": 1,
+    "image1": "https://example.com/image1.jpg",
+    "image2": "https://example.com/image2.jpg",
+    "image3": "https://example.com/image3.jpg",
+    "description": "El Azucena es perfecto para cualquier ocasi\u00f3n, brindando un toque de elegancia y color.",
+    "id": 60
+  }
+]
