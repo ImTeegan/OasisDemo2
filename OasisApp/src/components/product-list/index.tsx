@@ -115,40 +115,52 @@ const ProductListComponent = () => {
     };
 
     return (
-        <div className='porahora'>
-            <div>
-                <input type="text" placeholder="Search products" onChange={handleSearch} />
-                {['Arreglo', 'Ramo', 'Plantas', 'Oficina'].map((category) => (
-                    <label key={category}>
-                        <input
-                            type="checkbox"
-                            checked={filterCategory.includes(category)}
-                            onChange={(e) => handleCategoryChange(category, e.target.checked)}
-                        />
-                        {category}
-                    </label>
-                ))}
-                <select onChange={handleSortPrice}>
-                    <option value="">Select order</option>
-                    <option value="lowToHigh">Price: Low to High</option>
-                    <option value="highToLow">Price: High to Low</option>
-                </select>
-                <button onClick={clearFilters}>Limpiar filtros</button>
+        <div>
+            <div className='product-list-container'>
+                <div className="filters-container">
+                    <input type="text" placeholder="Buscar productos" onChange={handleSearch} />
+                    <h3>Categorías</h3>
+                    {['Arreglo', 'Ramo', 'Plantas', 'Oficina'].map((category) => (
+                        <label key={category}>
+
+                            <input
+                                type="checkbox"
+                                checked={filterCategory.includes(category)}
+                                onChange={(e) => handleCategoryChange(category, e.target.checked)}
+                            />
+                            {category}
+                        </label>
+                    ))}
+                    <select onChange={handleSortPrice}>
+                        <option value="">Seleccionar orden</option>
+                        <option value="lowToHigh">Precio: Bajo a Alto</option>
+                        <option value="highToLow">Precio: Alto a Bajo</option>
+                    </select>
+                    <button onClick={clearFilters}>Limpiar filtros</button>
+                </div>
+
+                <div className='cards'>
+                    {currentProducts.map(product => (
+                        <div className='cards__card' key={product.id}>
+                            <Link to={`/product-details/${product.id}`} style={{ textDecoration: 'none' }}>
+                                <img src={product.image1} alt="" />
+                                <div className='data-product'>
+                                    <h2>{product.productName}</h2>
+                                    <p>₡{product.price}</p>
+                                </div>
+                                <div className='cat-dat'>{product.category}</div>
+
+                            </Link>
+                            <button className='addButton' onClick={() => addProductToCart(product)}>Agregar al carrito</button>
+                        </div>
+
+                    ))}
+                </div>
             </div>
 
-            <div className='cards'>
-                {currentProducts.map(product => (
-                    <div className='cards__card' key={product.id}>
-                        <Link to={`/product-details/${product.id}`} style={{ textDecoration: 'none' }}>
-                            <img src={product.image1} alt="" />
-                            <h2>{product.productName}</h2>
-                            <p>₡{product.price}</p>
-                        </Link>
-                        <button className='addButton' onClick={() => addProductToCart(product)}>Agregar al carrito</button>
-                    </div>
 
-                ))}
-            </div>
+
+
 
             <div className={`notification ${showNotification ? 'show' : ''}`}>
                 {notificationMessage}
@@ -167,6 +179,7 @@ const ProductListComponent = () => {
                     Next
                 </button>
             </div>
+
         </div>
 
 

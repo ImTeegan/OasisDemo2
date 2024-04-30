@@ -2,16 +2,20 @@
 
 .navbar {
     position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0.7rem 4rem;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.2);
     width: -webkit-fill-available;
     z-index: 999;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
+    height: 60px;
 
     &.scrolled {
         background-color: rgba(255, 255, 255, 0.9); // Blanco con transparencia cuando se hace scroll
@@ -214,6 +218,30 @@
                 width: 22px;
                 height: 22px;
                 transition: transform 0.3s ease;
+            }
+        }
+    }
+
+    .empty-cart {
+        text-align: center;
+        padding: 20px;
+
+        p {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .empty-cart-button {
+            background-color: #0056b3;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+
+            &:hover {
+                background-color: darken(#0056b3, 10%);
             }
         }
     }

@@ -1,3 +1,66 @@
-.login-container {
-    padding-top: 10rem;
+@import '../../styles/global.scss';
+
+.login-background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('../../../public/images/banneropc7.png') no-repeat center center fixed;
+    background-size: cover;
+
+    .login-container {
+        background: $color-paleta2-4;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: $color-paleta2-2;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            padding-right: 25px;
+
+            label {
+                margin-bottom: 1rem;
+                color: $color-paleta2-2;
+
+                input {
+                    width: 100%;
+                    padding: 0.8rem;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    margin-top: 0.5rem;
+                }
+            }
+
+            button {
+                align-self: center;
+
+                width: 200px;
+                background-color: $color-paleta2-2;
+                color: $color-paleta2-4;
+                border: none;
+                padding: 1rem;
+                border-radius: 25px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                font-size: 1rem;
+                font-weight: 500;
+                margin-top: 25px;
+                margin-left: 20px;
+                // padding-left: 1px;
+
+                &:hover {
+                    background-color: darken($color-paleta2-2, 10%);
+                }
+            }
+        }
+    }
 }

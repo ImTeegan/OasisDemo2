@@ -8,7 +8,7 @@ import trash from '../../../public/icons/trashIcon.png';
 import { useRecoilState } from 'recoil';
 import { selectedProductsState } from '../../atoms/cartAtom';
 import { userState } from '../../atoms/sessionState';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 
 
@@ -23,6 +23,8 @@ const Navbar: React.FC = () => {
 
 
     const totalItems = selectedProducts.reduce((total, product) => total + product.quantity, 0);
+
+
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -125,25 +127,32 @@ const Navbar: React.FC = () => {
                 </div>
                 {isCartOpen && (
                     <div className="cartModal">
-                        {selectedProducts.map((product) => (
-                            <div className='cartModal__card' key={product.id}>
-                                <div>
-                                    <img src={product.image1} alt="" />
-                                </div>
-                                <div className='card-details'>
+                        {selectedProducts.length > 0 ? (
+                            selectedProducts.map((product) => (
+                                <div className='cartModal__card' key={product.id}>
                                     <div>
-                                        <h3>{product.productName}</h3>
-                                        <p>Cantidad: {product.quantity}</p>
-                                        <span>₡{product.price}</span>
+                                        <img src={product.image1} alt="" />
                                     </div>
-                                    <button onClick={() => deleteProduct(product.id)}> <img className='imgTrash' src={trash}></img> </button>
+                                    <div className='card-details'>
+                                        <div>
+                                            <h3>{product.productName}</h3>
+                                            <p>Cantidad: {product.quantity}</p>
+                                            <span>₡{product.price}</span>
+                                        </div>
+                                        <button onClick={() => deleteProduct(product.id)}> <img className='imgTrash' src={trash}></img> </button>
+                                    </div>
                                 </div>
-
+                            ))
+                        ) : (
+                            <div className="empty-cart">
+                                <p>Carrito Vacío</p>
+                                <Link className="link-style" to="/product-list">Agregar Productos</Link>
                             </div>
-                        ))}
-                        <Link className='link-style' to="/checkout">Finalizar compra</Link>
+                        )}
+                        {selectedProducts.length > 0 && <Link className='link-style' to="/checkout">Finalizar compra</Link>}
                     </div>
                 )}
+
             </div>
         </nav >
     );

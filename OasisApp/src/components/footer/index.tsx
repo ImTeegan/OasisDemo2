@@ -7,9 +7,17 @@ import shoppingBag from '../../../public/icons/shoppingBag.png';
 import facebook from '../../../public/icons/facebook.png';
 import instagram from '../../../public/icons/instagram.png';
 import './styles.scss'
+import { useLocation } from 'react-router-dom';
 
 
 const Footer: React.FC = () => {
+
+    const location = useLocation();  // Obtiene la ubicación actual
+
+    // Oculta el Navbar en la página de login
+    if (location.pathname === '/login') {
+        return null;
+    }
 
     return (
         <footer className="footer">
@@ -29,33 +37,33 @@ const Footer: React.FC = () => {
             </section>
 
             <section className="info-footer">
-                        <div className="info-footer__disclaimer">
-                            <h6>
-                                Oasis Floristeria y Eventos
-                            </h6>
-                            <p>
-                                La información presentada en este sitio web tiene fines meramente informativos y
-                                puede cambiar sin previo aviso. Nos esforzamos por proporcionar descripciones
-                                precisas y actualizadas de nuestros productos, sin embargo, las imágenes y los
-                                detalles pueden variar debido a la disponibilidad y la temporada.
-                            </p>
-                        </div>
+                <div className="info-footer__disclaimer">
+                    <h6>
+                        Oasis Floristeria y Eventos
+                    </h6>
+                    <p>
+                        La información presentada en este sitio web tiene fines meramente informativos y
+                        puede cambiar sin previo aviso. Nos esforzamos por proporcionar descripciones
+                        precisas y actualizadas de nuestros productos, sin embargo, las imágenes y los
+                        detalles pueden variar debido a la disponibilidad y la temporada.
+                    </p>
+                </div>
 
-                        <div className="info-footer__contact">
-                            <h6 className="">Contacto</h6>
-                            <p><i className=""></i> Ciudad Colon, San Jose</p>
-                            <p>
-                                <i className=""></i>
-                                oasis@oasis.com
-                            </p>
-                            <p><i className=""></i> 8861 1687</p>
-                        </div>
-                  
+                <div className="info-footer__contact">
+                    <h6 className="">Contacto</h6>
+                    <p><i className=""></i> Ciudad Colon, San Jose</p>
+                    <p>
+                        <i className=""></i>
+                        oasis@oasis.com
+                    </p>
+                    <p><i className=""></i> 8861 1687</p>
+                </div>
+
             </section>
 
             <div className="copyright" >
-                © 2024 Copyright: 
-                
+                © 2024 Copyright:
+
                 <a className="" href="https://mdbootstrap.com/"> oasisfloristeriayeventos.com</a>
             </div>
         </footer>

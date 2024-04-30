@@ -1,26 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import './styles.scss'
-import bannerimage from "../../../public/images/banneropc7.png"
-import axios from 'axios';
+import './styles.scss';
+import { Link } from 'react-router-dom';
 import { Product } from '../../types/types';
 import { fetchProducts } from '../../services/fetchProducts';
-import { Link } from 'react-router-dom';
 
 const FeaturedProducts: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
         const loadProducts = async () => {
             try {
                 const fetchedProducts = await fetchProducts();
-                setProducts(fetchedProducts);
+                // Solo cargar los primeros 6 productos para el carrusel
+                setProducts(fetchedProducts.slice(0, 6));
             } catch (error) {
-                console.log('Failed to fetch products', error);
+                console.error('Failed to fetch products', error);
             }
         };
-
         loadProducts();
     }, []);
+
+    const handlePrevClick = () => {
+        setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+    };
+
+    const handleNextClick = () => {
+        // Previene avanzar el índice más allá del punto donde se pueden mostrar menos de 3 productos
+        setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, products.length - 3));
+    };
 
     return (
         <>
@@ -28,18 +36,23 @@ const FeaturedProducts: React.FC = () => {
                 <div className='featuredProducts__titleButton'>
                     <h3>Los más vendidos</h3>
                     <Link className='link-style' to="/product-list">Ver todos los productos</Link>
-
                 </div>
-                <div className='featuredProducts__cards'>
-                    {products.slice(0, 4).map(product => (
-                        <Link to={`/product-details/${product.id}`} className='featuredProducts__cards__card' key={product.id}>
-                            <img src={product.image1} alt="" />
-                            <div className='featuredProducts__cards__card__sale'>Más vendido</div>
-                            <h2>{product.productName}</h2>
-                            <p>₡{product.price}</p>
-                            {/* más detalles del producto */}
-                        </Link>
-                    ))}
+                <div className='carousel-container'>
+                    <button onClick={handlePrevClick} disabled={currentIndex === 0}>&lt;</button>
+                    <div className='featuredProducts__cards' style={{ transform: `translateX(-${currentIndex * 100 / 3}%)` }}>
+                        {products.map((product, index) => (
+                            <div className='featuredProducts__cards__card' key={product.id} style={{ backgroundImage: `url(${product.image1})` }}>
+                                <Link className='Linkito' to={`/product-details/${product.id}`}>
+                                    <div className='featuredProducts__cards__card__sale'>Más vendido</div>
+                                    <div className='card-content'>
+                                        <h2 className='tituloCard'>{product.productName}</h2>
+                                        <p className='descCard'>{product.description}</p>
+                                    </div>
+                                </Link>
+                            </div>
+                        ))}
+                    </div>
+                    <button onClick={handleNextClick} disabled={currentIndex >= products.length - 3}>&gt;</button>
                 </div>
             </div>
         </>

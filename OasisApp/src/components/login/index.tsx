@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { userState } from '../../atoms/sessionState';
-import { fetchUsers } from '../../services/fetchProducts'; // Importa la función fetchUsers
+import { fetchUsers } from '../../services/fetchProducts';
 import './styles.scss';
 
 const LoginComponent = () => {
@@ -10,10 +10,10 @@ const LoginComponent = () => {
     const [password, setPassword] = useState('');
     const setUser = useSetRecoilState(userState);
     const navigate = useNavigate();
+    const [error, setError] = useState('');
 
     const handleLogin = async (event) => {
         event.preventDefault();
-
         const emailRegex = /^\S+@\S+\.\S+$/;
         if (!emailRegex.test(username)) {
             alert('Por favor, ingrese un correo electrónico válido.');
@@ -25,42 +25,45 @@ const LoginComponent = () => {
             return;
         }
 
-        // Obtiene los usuarios del archivo JSON
         const users = await fetchUsers();
-        const userExists = users.find(user => user.email === username && user.password === password);
 
+        const userExists = users.find(user => user.email === username && user.password === password);
         if (userExists) {
-            setUser({ isLoggedIn: true, name: userExists.name });   // Actualiza el estado global a logueado
-            navigate('/');  // Navega al inicio
+            setUser({ isLoggedIn: true, name: userExists.name });
+            navigate('/');
         } else {
-            alert('Credenciales incorrectas, por favor intente de nuevo.');
+            setError('Credenciales incorrectas');
         }
     };
 
     return (
-        <div className="login-container">
-            <h1>Iniciar Sesión</h1>
-            <form onSubmit={handleLogin}>
-                <label>
-                    Nombre de usuario (Correo Electrónico):
-                    <input
-                        type="email"
-                        value={username}
-                        onChange={e => setUsername(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    Contraseña:
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        required
-                    />
-                </label>
-                <button type="submit">Iniciar Sesión</button>
-            </form>
+        <div className="login-background">
+            <div className="login-container">
+                <h1>Iniciar Sesión</h1>
+                <form onSubmit={handleLogin}>
+                    <label>
+                        Correo Electrónico:
+                        <input
+                            type="email"
+                            value={username}
+                            onChange={e => setUsername(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <label>
+                        Contraseña:
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <button type="submit">Iniciar Sesión</button>
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
+
+                </form>
+            </div>
         </div>
     );
 };

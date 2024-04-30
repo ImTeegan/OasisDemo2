@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url('../../../public/images/banneropc13.jpg');
+    background-image: url('../../../public/images/banneropc13.jpg');
     background-size: cover;
     background-position: center;
     min-height: 100vh;
@@ -46,7 +46,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url('../../../public/images/banneropc13.jpg'); // Utiliza interpolación para la imagen
+            background-image: linear-gradient(to bottom, rgba(111, 109, 109, 0.471), rgba(111, 109, 109, 0.471)); // Utiliza interpolación para la imagen
             background-size: cover;
             background-position: center;
             border-radius: 10px; // Igual que el border-radius de hero-content
