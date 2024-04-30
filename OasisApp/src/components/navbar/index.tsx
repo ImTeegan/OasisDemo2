@@ -4,10 +4,12 @@ import logo from '../../../public/images/Logoalternativo.png';
 import shoppingBag from '../../../public/icons/shoppingBag.png';
 import userIcon from '../../../public/icons/userIcon.png';
 import logoutIcon from '../../../public/icons/logoutIcon.png';
+import trash from '../../../public/icons/trashIcon.png';
 import { useRecoilState } from 'recoil';
 import { selectedProductsState } from '../../atoms/cartAtom';
 import { userState } from '../../atoms/sessionState';
 import { Link, useNavigate } from 'react-router-dom';
+
 
 
 const Navbar: React.FC = () => {
@@ -92,24 +94,27 @@ const Navbar: React.FC = () => {
                 <span></span>
                 <span></span>
             </div>
-            <div className="logo">
-                <img src={logo} alt="Logo" />
-            </div>
+            <Link to="/">
+                <div className="logo">
+                    <img src={logo} alt="Logo" />
+                </div>
+            </Link>
+
             <div className="rightmenu">
                 <ul className={isOpen ? "navMenuActive" : "navMenu"}>
-                    <li className='link-tabs'><a href="#products">Productos</a></li>
-                    <li className='link-tabs'><a href="#events">Eventos</a></li>
-                    <li className='link-tabs'><Link to="/create">Crear</Link></li>
-                    <li>{user.isLoggedIn ? (
+                    <li className='link-tabs'><Link className='inner-link' to="/product-list">Productos</Link></li>
+                    <li className='link-tabs'><a className='inner-link' href="#events">Eventos</a></li>
+                    <li className='link-tabs'><Link className='inner-link' to="/create">Crear</Link></li>
+                    <li className='link-tabs'>{user.isLoggedIn ? (
                         <div className="user-menu" onClick={toggleDropdown}>
-                            {user.name} {/* Muestra el nombre del usuario */}
+                            {user.name} ▼
                             <div className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`}>
                                 <div className='element-dm'><Link className='clasea-test' to="/profile"> <img className='userImg' src={userIcon} alt="" /> Perfil</Link></div>
                                 <div className='element-dm'><button className='plain-button' onClick={handleLogout}><img className='userImg' src={logoutIcon} alt="" />Cerrar sesión</button></div>
                             </div>
                         </div>
                     ) : (
-                        <Link to="/login">Iniciar Sesión</Link>
+                        <Link className='inner-link' to="/login">Iniciar Sesión</Link>
                     )}</li>
                 </ul>
                 <div className="cartIcon" onClick={toggleCart}>
@@ -121,18 +126,26 @@ const Navbar: React.FC = () => {
                 {isCartOpen && (
                     <div className="cartModal">
                         {selectedProducts.map((product) => (
-                            <div key={product.id}>
-                                <h3>{product.productName}</h3>
-                                <p>Cantidad: {product.quantity}</p>
-                                <p>{product.price}</p>
-                                <button onClick={() => deleteProduct(product.id)}>Eliminar</button>
+                            <div className='cartModal__card' key={product.id}>
+                                <div>
+                                    <img src={product.image1} alt="" />
+                                </div>
+                                <div className='card-details'>
+                                    <div>
+                                        <h3>{product.productName}</h3>
+                                        <p>Cantidad: {product.quantity}</p>
+                                        <span>₡{product.price}</span>
+                                    </div>
+                                    <button onClick={() => deleteProduct(product.id)}> <img className='imgTrash' src={trash}></img> </button>
+                                </div>
+
                             </div>
                         ))}
-                        <Link to="/checkout">Finalizar compra</Link>
+                        <Link className='link-style' to="/checkout">Finalizar compra</Link>
                     </div>
                 )}
             </div>
-        </nav>
+        </nav >
     );
 };
 

@@ -40,10 +40,10 @@
     "id": 4
   },
   {
-    "productName": "Girasol",
+    "productName": "Girasol naciente",
     "category": "Oficina",
     "price": 83390,
-    "image1": "https://example.com/image1.jpg",
+    "image1": "/images/flor5.jpeg",
     "image2": "https://example.com/image2.jpg",
     "image3": "https://example.com/image3.jpg",
     "description": "Celebra momentos especiales con un hermoso Girasol, s\u00edmbolo de amor y aprecio.",
@@ -60,7 +60,7 @@
     "id": 6
   },
   {
-    "productName": "Girasol",
+    "productName": "Girasol del valle",
     "category": "Ramo",
     "price": 27500,
     "image1": "https://example.com/image1.jpg",

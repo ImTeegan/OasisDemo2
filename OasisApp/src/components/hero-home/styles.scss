@@ -1,138 +1,85 @@
-@import '../../styles/global.scss';
-
 .hero {
     display: flex;
-    justify-content: center;
     align-items: center;
-    
+    justify-content: center;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url('../../../public/images/banneropc13.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    position: relative;
+    color: #fff;
 
+    .image-hero {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+    }
 
     .hero-grid {
-        // display: flex;
-        //grid-template-columns: repeat(1, 1fr);
-
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
         width: 100%;
+    }
 
-        .hero-item {
-            //position: relative;
+    .hero-content {
+        position: relative;
+        z-index: 1; // Asegúrate de que el contenido esté encima del pseudo-elemento
+        max-width: 600px;
+        padding: 20px;
+        text-align: center;
+        color: white; // Color del texto
+        border-radius: 10px;
+        backdrop-filter: blur(5px); // Aplica desenfoque al fondo detrás del contenido
+        background: rgba(0, 0, 0, 0.5); // Oscurece el fondo
 
-            .image-hero {
-                width: 100%;
-                height: 90vh;
-                object-fit: cover;
-            }
-
-            .title-home {
-                text-align: center;
-                //justify-content: center;
-                color: $color-2;
-                font-size: 2.5rem;
-                position: absolute;
-                bottom: 70%;
-                left: 50%;
-                transform: translate(-50%, 50%);
-                z-index: 1;
-
-                @media only screen and (min-width: 48rem) { 
-                   
-                    font-size: 6rem;
-                }
-            }
-
-            .frase-home {
-                color: $color-2;
-                text-align: center;
-                font-size: 1.4rem;
-                position: absolute;
-                bottom: 55%;
-                left: 50%;
-                transform: translate(-50%, 50%);
-                z-index: 1;
-
-                @media only screen and (min-width: 48rem) {       
-                    font-size: 2.3rem;
-                    bottom: 50%;
-                }
-            }
-
-            button.shop-now {
-                position: absolute;
-                text-align: center;
-                bottom: 40%;
-                left: 50%;
-                transform: translate(-50%, 50%);
-                z-index: 1;
-                background-color: $color-button-main;
-                border: 0 solid #E5E7EB;
-                box-sizing: border-box;
-                color: $color-white;
-                //
-                font-family: ui-sans-serif, system-ui, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-                font-size: 2rem;
-                font-weight: 700;
-                line-height: 1.75rem;
-                padding: .75rem 1.65rem;
-
-
-                text-decoration: none #000000 solid;
-                text-decoration-thickness: auto;
-                width: 100%;
-                max-width: 300px;
-
-                cursor: pointer;
-                //transform: rotate(-2deg);
-                user-select: none;
-                -webkit-user-select: none;
-                touch-action: manipulation;
-
-                @media only screen and (min-width: 48rem) {       
-                    bottom: 35%;
-                    max-width: 450px;
-                }
-            }
-
-            .shop-now:focus {
-                outline: 0;
-            }
-
-            .shop-now:after {
-                content: '';
-                position: absolute;
-                border: 1px solid #000000;
-                bottom: 4px;
-                left: 4px;
-                width: calc(100% - 1px);
-                height: calc(100% - 1px);
-            }
-
-            .shop-now:hover:after {
-                bottom: 2px;
-                left: 2px;
-            }
+        // Creamos un pseudo-elemento para el efecto de la imagen de fondo difuminada
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url('../../../public/images/banneropc13.jpg'); // Utiliza interpolación para la imagen
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px; // Igual que el border-radius de hero-content
+            filter: blur(8px); // Aumenta el desenfoque si es necesario
+            z-index: -1; // Posiciona el pseudo-elemento detrás del contenido
         }
     }
 
-    @media screen and (max-width: 768px) {
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            grid-template-rows: auto;
-            gap: 20px;
 
-            .hero-item {
-                &:nth-child(1) {
-                    order: -1;
-                }
-            }
+    .title-home {
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+    }
 
-            button.shop-now {
-                position: relative;
-                transform: translate(-50%, 0);
-                bottom: auto;
-                left: auto;
-                padding: .75rem 3rem;
-                font-size: 1.25rem;
-            }
+    .frase-home {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .shop-now {
+        background-color: #e63946;
+        color: white;
+        padding: 0.75rem 2rem;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+
+        &:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
     }
 }
