@@ -34,7 +34,7 @@ const Checkout = () => {
             <div>
                 {step === 1 && <CartSummary onNext={handleNext} />}
                 {step === 2 && <ShippingForm onNext={handleNext} onPrevious={handlePrevious} shippingData={shippingData} setShippingData={setShippingData} />}
-                {step === 3 && <PaymentForm onPurchase={() => alert("Muchas gracias por tu compra!")} onPrevious={handlePrevious} paymentData={paymentData} setPaymentData={setPaymentData} />}
+                {step === 3 && <PaymentForm onPrevious={handlePrevious} paymentData={paymentData} setPaymentData={setPaymentData} />}
             </div>
         </div>
     );

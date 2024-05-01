@@ -1,28 +1,134 @@
-.paymentForm {
-    padding-top: 10rem;
-}
+@import '../../styles/global.scss';
 
-.card-number-input {
-    position: relative;
+.payment-form {
     display: flex;
+    justify-content: center;
     align-items: center;
+    //min-height: 85vh;
+    background-color: #fff;
+    padding: 20px;
+    padding-bottom: 14.6rem;
+
+    .form {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        //box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 500px;
+
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
+            width: 450px;
+
+            .input-field {
+                width: 100%;
+                padding: 10px 40px 10px 10px;
+                border: 2px solid #ccc;
+                border-radius: 4px;
+                font-size: 16px;
+                color: #333;
+                transition: border-color 0.3s;
+
+                &:focus {
+                    border-color: $color-paleta2-2;
+                    outline: none;
+                }
+            }
+
+            .card-logo {
+                position: absolute;
+                top: 50%;
+                right: -40px;
+                transform: translateY(-50%);
+                height: 24px;
+                display: flex;
+                align-items: flex-end;
+                //padding-left: 15px;
+
+                img {
+                    height: 100%;
+                    align-self: flex-end;
+                }
+            }
+        }
+
+        .expiry-group {
+            display: flex;
+            gap: 10px;
+
+            .input-field {
+                flex-grow: 1;
+            }
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            font-size: 14px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+
+            .button {
+                padding: 10px 20px;
+                border-radius: 5px;
+                border: none;
+                color: white;
+                font-weight: bold;
+                cursor: pointer;
+                transition: background-color 0.3s;
+
+                &-previous {
+                    background-color: #ccc;
+                    color: #333;
+
+                    &:hover {
+                        background-color: darken($color: #ccc, $amount: 10%);
+                    }
+                }
+
+                &-submit {
+                    background-color: red;
+
+                    &:hover {
+                        background-color: darken($color: red, $amount: 10%);
+                    }
+                }
+            }
+        }
+    }
 }
 
-.card-number-input input {
-    padding-right: 50px;
-    /* Asegura espacio para el logo */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-}
-
-.card-logo {
-    position: absolute;
-    right: 10px;
-    /* Posiciona el logo dentro del input, a la derecha */
-    height: 30px;
-    /* Ajusta según el tamaño deseado para los logos */
-}
-
-.card-logo img {
     height: 100%;
-    /* Asegura que el logo tenga el tamaño correcto */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+
+    .modal-content {
+        padding: 20px;
+        background: $color-paleta2-2;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        text-align: center;
+        color: $color-paleta2-4;
+
+        .check {
+            width: 100px;
+            height: 100px;
+        }
+
+
+    }
 }

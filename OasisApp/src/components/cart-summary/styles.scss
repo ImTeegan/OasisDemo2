@@ -1,10 +1,52 @@
 @import '../../styles/global.scss';
 
+.crumb-path1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #eef2f5; // Light blue background for a soft appearance
+    padding: 12px 24px;
+    border-radius: 10px;
+    //box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    //margin-bottom: 20px;
+    margin: 0rem 4rem;
+    margin-top: 6rem;
+    //margin-bottom: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    span,
+    strong {
+        font-size: 16px;
+        color: #33475b; // Deep blue color for a professional look
+
+        &:not(:last-child)::after {
+            content: " > ";
+            margin: 0 5px;
+            color: #7f8c9a; // Light grey for separators to reduce visual clutter
+        }
+    }
+
+    strong {
+        font-weight: 600; // Slightly bolder than normal but less than bold
+        color: #1a73e8; // Bright blue to highlight the current step
+    }
+
+    p {
+        margin: 0; // Reset default margins
+        font-size: 16px;
+        color: #1a1a1a; // Dark grey for contrast and easy readability
+        font-weight: 500; // Medium font weight for importance without being overpowering
+
+        span {
+            color: #d93025; // Red color for numbers to draw attention
+        }
+    }
+}
 
 .cart-summary {
     display: flex;
     justify-content: space-between;
-    padding: 7rem 10rem;
+    padding: 2rem 10rem;
     // background-color: #f8f8f8;
     //border-radius: 8px;
     //margin: 20px;
@@ -113,6 +155,8 @@
         border-radius: 5px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         width: 200px;
+        height: 200px;
+        margin-top: 2rem;
 
         &__totalprice {
             font-size: 1.5rem;
@@ -130,7 +174,7 @@
             border-radius: 5px;
 
             &:hover {
-                background-color: darken(#28a745, 10%);
+                background-color: darken($color-paleta2-2, 10%);
             }
         }
     }

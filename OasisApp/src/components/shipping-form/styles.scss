@@ -1,3 +1,137 @@
-.shippingForm {
-    padding-top: 10rem;
+@import '../../styles/global.scss';
+
+.crumb-path {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #eef2f5; // Light blue background for a soft appearance
+    padding: 12px 24px;
+    border-radius: 10px;
+    //box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+    margin: 6rem 4rem;
+    margin-bottom: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    span,
+    strong {
+        font-size: 16px;
+        color: #33475b; // Deep blue color for a professional look
+
+        &:not(:last-child)::after {
+            content: " > ";
+            margin: 0 5px;
+            color: #7f8c9a; // Light grey for separators to reduce visual clutter
+        }
+    }
+
+    strong {
+        font-weight: 600; // Slightly bolder than normal but less than bold
+        color: #1a73e8; // Bright blue to highlight the current step
+    }
+
+    p {
+        margin: 0; // Reset default margins
+        font-size: 16px;
+        color: #1a1a1a; // Dark grey for contrast and easy readability
+        font-weight: 500; // Medium font weight for importance without being overpowering
+
+        span {
+            color: #d93025; // Red color for numbers to draw attention
+        }
+    }
+}
+
+
+
+
+.shipping-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    //box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+
+    .titleshipping {
+        align-self: flex-start;
+    }
+
+    .form {
+        width: 100%;
+        padding-right: 1rem;
+
+        .form-group {
+            margin-bottom: 20px;
+
+            label {
+                display: block;
+                font-size: 16px;
+                color: #333;
+                margin-bottom: 0.5rem;
+            }
+
+            input,
+            select {
+                width: 100%;
+                padding: 10px;
+                border: 2px solid #e0e0e0;
+                border-radius: 4px;
+                transition: border-color 0.3s;
+
+                &:focus {
+                    border-color: $color-paleta2-2;
+                    outline: none;
+                }
+            }
+
+
+        }
+
+        .error-message {
+            color: #d32f2f;
+            font-size: 0.875rem;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+
+            .button {
+                padding: 10px 20px;
+                border-radius: 5px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: background-color 0.2s;
+                border: none;
+
+                &-previous {
+                    background-color: #ccc;
+
+                    &:hover {
+                        background-color: #b3b3b3;
+                    }
+                }
+
+                &-next {
+                    background-color: $color-paleta2-2;
+                    color: white;
+
+
+                    &:hover {
+                        background-color: darken($color: $color-paleta2-2, $amount: 10%);
+                    }
+                }
+            }
+        }
+    }
 }

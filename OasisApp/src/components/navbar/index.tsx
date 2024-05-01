@@ -149,7 +149,7 @@ const Navbar: React.FC = () => {
                                 <Link className="link-style" to="/product-list">Agregar Productos</Link>
                             </div>
                         )}
-                        {selectedProducts.length > 0 && <Link className='link-style' to="/checkout">Finalizar compra</Link>}
+                        {selectedProducts.length > 0 && <Link className='link-style' to="/checkout">Ver Carrito</Link>}
                     </div>
                 )}
 
