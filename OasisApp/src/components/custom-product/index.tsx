@@ -73,9 +73,44 @@ const CustomProduct = () => {
         if (canAddItem) {
             setSelectedItems(currentItems => [...currentItems, item]);
             setTotal(currentTotal => currentTotal + item.precio);
+            setNotificationMessage(`${item.nombre} agregado a tu ramo personalizado.`);
+            setShowNotification(true);
+            setTimeout(() => setShowNotification(false), 5000);
         }
 
 
+    };
+
+    const handleRemoveItem = (item: CustomItem, index: number) => {
+        setSelectedItems(currentItems => currentItems.filter((_, i) => i !== index));
+        setTotal(currentTotal => currentTotal - item.precio);
+
+        switch (item.tipo) {
+            case 'flor':
+                setFlowerCount(flowerCount - 1);
+                break;
+            case 'papel':
+                setPaperCount(paperCount - 1);
+                break;
+            case 'follaje':
+                setFollajeCount(follajeCount - 1);
+                break;
+            default:
+                break;
+        }
+    };
+
+    const isSelectable = (itemType: string) => {
+        switch (itemType) {
+            case 'flor':
+                return flowerCount < 3;
+            case 'papel':
+                return paperCount < 2;
+            case 'follaje':
+                return follajeCount < 2;
+            default:
+                return false;
+        }
     };
 
     const createCustomProduct = () => {
@@ -117,37 +152,45 @@ const CustomProduct = () => {
         <div className='containerMain'>
             <div className="product-container">
                 <h2>Flores</h2>
-                <div className="customProductList">
+                <div className="customCards">
                     {customItems.filter(item => item.tipo === 'flor').map(flower => (
-                        <div key={flower.id} className="product-card">
+                        <div key={flower.id} className={`customCards__customCard ${isSelectable('flor') ? '' : 'disabled'}`}>
                             <img src={flower.imagen} alt={flower.nombre} />
-                            <h3>{flower.nombre}</h3>
-                            <p>Precio: ₡{flower.precio}</p>
-                            <button onClick={() => handleSelectItem(flower)}>Elegir</button>
+                            <div className='data-custom-product'>
+                                <h3>{flower.nombre}</h3>
+                                <p>₡{flower.precio}</p>
+                            </div>
+                            <button className='add-Button' onClick={() => handleSelectItem(flower)} disabled={!isSelectable('flor')}>Elegir</button>
                         </div>
                     ))}
                 </div>
 
                 <h2>Papel de Envoltura</h2>
-                <div className="customProductList">
+                <div className="customCards">
                     {customItems.filter(item => item.tipo === 'papel').map(paper => (
-                        <div key={paper.id} className="product-card">
+                        <div key={paper.id} className={`customCards__customCard ${isSelectable('papel') ? '' : 'disabled'}`}>
                             <img src={paper.imagen} alt={paper.nombre} />
-                            <h3>{paper.nombre}</h3>
-                            <p>Precio: ₡{paper.precio}</p>
-                            <button onClick={() => handleSelectItem(paper)}>Elegir</button>
+                            <div className='data-custom-product'>
+                                <h3>{paper.nombre}</h3>
+                                <p>₡{paper.precio}</p>
+                            </div>
+
+                            <button className='add-Button' onClick={() => handleSelectItem(paper)}>Elegir</button>
                         </div>
                     ))}
                 </div>
 
                 <h2>Follaje</h2>
-                <div className="customProductList">
+                <div className="customCards">
                     {customItems.filter(item => item.tipo === 'follaje').map(follaje => (
-                        <div key={follaje.id} className="product-card">
+                        <div key={follaje.id} className={`customCards__customCard ${isSelectable('follaje') ? '' : 'disabled'}`}>
                             <img src={follaje.imagen} alt={follaje.nombre} />
-                            <h3>{follaje.nombre}</h3>
-                            <p>Precio: ₡{follaje.precio}</p>
-                            <button onClick={() => handleSelectItem(follaje)}>Elegir</button>
+                            <div className='data-custom-product'>
+                                <h3>{follaje.nombre}</h3>
+                                <p>₡{follaje.precio}</p>
+                            </div>
+
+                            <button className='add-Button' onClick={() => handleSelectItem(follaje)}>Elegir</button>
                         </div>
                     ))}
                 </div>
@@ -155,17 +198,22 @@ const CustomProduct = () => {
             <div className="selected-items">
                 <h2>Elementos seleccionados</h2>
                 {selectedItems.map((item, index) => (
-                    <div key={index}>
-                        <p>{item.nombre} - ₡{item.precio}</p>
-                        <img className='imgaux' src={item.imagen} alt="" />
+                    <div className="item-card" key={index}>
+                        <button className="item-card__remove" onClick={() => handleRemoveItem(item, index)}>x</button>
+                        <img className='item-card__img' src={item.imagen} alt={item.nombre} />
+                        <div className="item-card__info">
+                            <p>{item.nombre} - ₡{item.precio}</p>
+                            <h6>{item.tipo}</h6>
+                        </div>
                     </div>
                 ))}
                 <h3>Total: ₡{total}</h3>
-                <button onClick={createCustomProduct}>Agregar al carrito </button>
-                <div className={`notification ${showNotification ? 'show' : ''}`}>
+                <button onClick={createCustomProduct}>Agregar al carrito</button>
+                <div className={`notificationMessage ${showNotification ? 'show' : ''}`}>
                     {notificationMessage}
                 </div>
             </div>
+
 
         </div>
 

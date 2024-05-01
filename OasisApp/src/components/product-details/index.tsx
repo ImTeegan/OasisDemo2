@@ -75,15 +75,16 @@ const ProductDetailsComponent: React.FC = () => {
             </div>
             <div className='productDetails__containerdetails'>
                 <h1>{product.productName}</h1>
-                <p className='productDetails__containerdetails__price'>₡{product.price}</p>
                 <p className='productDetails__containerdetails__cat'>{product.category}</p>
                 <p className='productDetails__containerdetails__des'>{product.description}</p>
+                <p className='productDetails__containerdetails__price'>₡{product.price}</p>
                 <div>
+                    <p>Cantidad:</p>
                     <button onClick={() => handleQuantityChange(-1)}>-</button>
                     <input type="text" value={quantity} readOnly />
                     <button onClick={() => handleQuantityChange(1)}>+</button>
                 </div>
-                <button onClick={() => addProductToCart(product)}>Agregar al carrito<img src={shoppingBag} /></button>
+                <button className='buttonAdd' onClick={() => addProductToCart(product)}>Agregar al carrito<img src={shoppingBag} /></button>
             </div>
             <div className={`notification ${showNotification ? 'show' : ''}`}>
                 {notificationMessage}

@@ -3,11 +3,8 @@
 .containerMain {
     display: grid;
     grid-template-columns: 3fr 1fr;
-}
-
-.imgaux {
-    width: 100px;
-    height: auto;
+    margin: 2rem 4rem;
+    gap: 2rem;
 }
 
 .product-container {
@@ -15,47 +12,213 @@
     flex-direction: column;
 }
 
-.customProductList {
+.customCards {
+    flex: 3;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    padding: 7rem 4rem;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    padding-top: 1.3rem;
+    padding-bottom: 2rem;
+
+
+
+    &__customCard {
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+        cursor: pointer;
+        text-decoration: none;
+        position: relative;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        img {
+            width: 100%;
+            height: 200px; // Reduced for better fit
+            object-fit: cover;
+        }
+
+
+
+
+        .data-custom-product {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 0 1rem;
+
+            p {
+                //padding: 0 10px;
+                color: black;
+                font-size: 1.3rem;
+                font-weight: 400;
+                justify-content: end;
+            }
+
+            h2 {
+                //margin-top: 10px;
+                //padding: 0 10px;
+                color: black;
+                font-size: 1.3rem;
+                font-weight: 400;
+            }
+
+        }
+
+        .cat-dat {
+            font-style: italic;
+            font-size: 1rem;
+            color: grey;
+            padding-left: 1rem;
+            margin-bottom: 1rem;
+        }
+
+
+
+        .add-Button {
+            margin: auto 10px 10px;
+            padding: 10px;
+            background-color: white;
+            color: $color-paleta2-2;
+            border: solid 1.5px $color-paleta2-2;
+            border-radius: 4px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: darken($color-paleta2-2, 10%);
+                color: $color-paleta2-4;
+            }
+        }
+
+        &.disabled {
+            &:after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 1;
+            }
+
+            button {
+                display: none;
+            }
+        }
+    }
 }
 
-.product-card {
-    background: #fff;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-    text-decoration: none;
+.selected-items {
+    //margin: 1rem;
+    padding: 1rem;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 3rem;
 
-    &:hover {
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        transform: translateY(-5px);
-    }
-
-    img {
-        width: 100%;
-        height: 400px;
-        display: block;
-    }
-
-
-
+    h2,
     h3 {
-        font-size: 1.5rem;
-        margin: 10px;
         color: #333;
+        //padding: 0.5rem 0;
     }
 
-    p {
-        font-size: 1.2rem;
-        margin: 0 10px 10px;
-        color: #666;
+    .item-card {
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        margin: 1rem 0;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+        &__remove {
+            width: 30px;
+            position: absolute;
+            top: -10px;
+            right: 1px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: black; // A tomato red color for the remove button
+            font-weight: 200;
+
+            &:hover {
+                color: #e60023; // Darker shade on hover
+                background-color: transparent;
+            }
+        }
+
+        &__img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 20px;
+            border-radius: 4px;
+        }
+
+        &__info {
+            flex: 1;
+
+            p {
+                margin: 0;
+                font-size: 1rem;
+                font-weight: 400;
+                color: #666;
+                //padding-bottom: 40px;
+            }
+
+            h6 {
+                font-size: 0.7rem;
+                font-style: italic;
+            }
+
+        }
+    }
+
+    button {
+        width: 100%;
+        padding: 10px 0;
+        margin-top: 10px;
+        background-color: $color-paleta2-2;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: darken(#007bff, 10%);
+        }
+    }
+
+    .notification {
+        display: none;
+
+        &.show {
+            display: block;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #90ee90;
+            color: #006400;
+            text-align: center;
+            font-weight: bold;
+        }
     }
 }
 
-.notification {
+
+.notificationMessage {
     position: fixed;
     bottom: 80px;
     left: 50%;
@@ -69,13 +232,15 @@
     border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     visibility: hidden;
-    font-size: 25px;
+    font-size: 18px;
     /* oculta inicialmente */
     opacity: 0;
     transition: opacity 0.5s, visibility 0.5s;
+    z-index: 300;
+    //font-size: 2rem;
 }
 
-.notification.show {
+.notificationMessage.show {
     visibility: visible;
     opacity: 1;
 }
