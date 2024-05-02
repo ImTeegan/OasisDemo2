@@ -7,6 +7,10 @@
     padding: 7rem 4rem;
     gap: 7rem;
 
+    @media (max-width: 768px) {
+        gap: 2rem;
+    }
+
     .productDetails__containerimg {
         flex: 1;
 
@@ -152,4 +156,8 @@
 .notification.show {
     visibility: visible;
     opacity: 1;
+
+    @media (max-width: 768px) {
+        font-size: 18px;
+    }
 }

@@ -41,7 +41,13 @@
     grid-template-columns: repeat(2, 1fr);
     border-bottom: 2px solid $color-paleta2-4;
 
+    @media (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+    }
+
     &__disclaimer {
+
 
         //align-content: center;
 

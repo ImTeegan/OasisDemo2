@@ -50,6 +50,7 @@
     // background-color: #f8f8f8;
     //border-radius: 8px;
     //margin: 20px;
+    gap: 2rem;
 
     &__cards {
         display: flex;
@@ -62,7 +63,7 @@
             padding: 15px;
             //border-radius: 5px;
             //box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 700px;
+            //width: 700px;
             display: flex;
             flex-direction: row;
 
@@ -71,7 +72,7 @@
                 display: flex;
                 flex-direction: row;
                 //gap: 5rem;
-                width: 530px;
+                // width: 530px;
                 justify-content: space-between;
 
 
@@ -198,6 +199,59 @@
             scale: 1.1;
             transition: all ease 0.1s;
         }
+    }
+
+}
+
+@media (max-width: 768px) {
+    .cart-summary {
+        display: grid;
+        grid-template-rows: 3fr 1fr;
+        padding: 2rem 1rem;
+
+        &__cards {
+            //width: 300px;
+
+            &__card {
+                //  width: 370px;
+
+                .headerp {
+                    // width: 220px;
+
+                }
+
+                img {
+                    width: 100px;
+                    height: 100px;
+                }
+            }
+        }
+
+        &__rightsection {
+            justify-self: center;
+        }
+    }
+
+    .crumb-path1 {
+        margin: 0 1rem;
+        margin-top: 6rem;
+
+        span,
+        strong {
+            font-size: 13px;
+        }
+
+
+    }
+
+}
+
+@media (min-width: 769px) and (max-width: 999px) {
+    .cart-summary {
+
+        padding: 2rem 1rem;
+        gap: 2rem;
+
     }
 
 }

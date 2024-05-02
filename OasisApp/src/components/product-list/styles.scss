@@ -197,9 +197,7 @@
 
 
 
-.porahora {
-    padding-top: 10rem;
-}
+
 
 .addButton {
     cursor: pointer;
@@ -223,12 +221,20 @@
     font-size: 25px;
     /* oculta inicialmente */
     opacity: 0;
-    transition: opacity 0.5s, visibility 0.5s;
+    // transition: opacity 0.5s, visibility 0.5s;
+
+
+
+
 }
 
 .notification.show {
     visibility: visible;
     opacity: 1;
+
+    @media (max-width: 768px) {
+        font-size: 18px;
+    }
 }
 
 .pagination {

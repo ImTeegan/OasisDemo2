@@ -105,7 +105,6 @@ const Navbar: React.FC = () => {
             <div className="rightmenu">
                 <ul className={isOpen ? "navMenuActive" : "navMenu"}>
                     <li className='link-tabs'><Link className='inner-link' to="/product-list">Productos</Link></li>
-                    <li className='link-tabs'><a className='inner-link' href="#events">Eventos</a></li>
                     <li className='link-tabs'><Link className='inner-link' to="/create">Crear</Link></li>
                     <li className='link-tabs'>{user.isLoggedIn ? (
                         <div className="user-menu" onClick={toggleDropdown}>

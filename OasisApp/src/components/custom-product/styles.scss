@@ -5,11 +5,24 @@
     grid-template-columns: 3fr 1fr;
     margin: 2rem 4rem;
     gap: 2rem;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr; // Cambia a una sola columna
+        grid-template-rows: auto auto; // Define las filas para el control explícito
+        grid-template-areas:
+            "selected-items"
+            "product-container";
+    }
 }
 
 .product-container {
     display: flex;
     flex-direction: column;
+    //grid-area: product-container;
+
+    @media (max-width: 768px) {
+        grid-area: product-container;
+    }
 }
 
 .customCards {
@@ -19,8 +32,6 @@
     gap: 1rem;
     padding-top: 1.3rem;
     padding-bottom: 2rem;
-
-
 
     &__customCard {
         display: flex;
@@ -41,12 +52,9 @@
 
         img {
             width: 100%;
-            height: 200px; // Reduced for better fit
+            height: 200px; // Adjusted for better fit
             object-fit: cover;
         }
-
-
-
 
         .data-custom-product {
             display: flex;
@@ -55,32 +63,17 @@
             padding: 0 1rem;
 
             p {
-                //padding: 0 10px;
-                color: black;
-                font-size: 1.3rem;
-                font-weight: 400;
-                justify-content: end;
-            }
-
-            h2 {
-                //margin-top: 10px;
-                //padding: 0 10px;
                 color: black;
                 font-size: 1.3rem;
                 font-weight: 400;
             }
 
+            h3 {
+                color: black;
+                font-size: 1.3rem;
+                font-weight: 400;
+            }
         }
-
-        .cat-dat {
-            font-style: italic;
-            font-size: 1rem;
-            color: grey;
-            padding-left: 1rem;
-            margin-bottom: 1rem;
-        }
-
-
 
         .add-Button {
             margin: auto 10px 10px;
@@ -117,17 +110,16 @@
 }
 
 .selected-items {
-    //margin: 1rem;
     padding: 1rem;
     background-color: #f5f5f5;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
     margin-top: 3rem;
 
     h2,
     h3 {
         color: #333;
-        //padding: 0.5rem 0;
     }
 
     .item-card {
@@ -141,19 +133,18 @@
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 
         &__remove {
-            width: 30px;
             position: absolute;
             top: -10px;
-            right: 1px;
+            right: 10px;
             border: none;
             background: none;
             cursor: pointer;
             font-size: 1.2rem;
-            color: black; // A tomato red color for the remove button
-            font-weight: 200;
+            color: black;
+            text-align: right;
 
             &:hover {
-                color: #e60023; // Darker shade on hover
+                color: #e60023;
                 background-color: transparent;
             }
         }
@@ -174,14 +165,12 @@
                 font-size: 1rem;
                 font-weight: 400;
                 color: #666;
-                //padding-bottom: 40px;
             }
 
             h6 {
                 font-size: 0.7rem;
                 font-style: italic;
             }
-
         }
     }
 
@@ -195,7 +184,6 @@
         border-radius: 4px;
         cursor: pointer;
         font-weight: bold;
-        transition: background-color 0.3s;
 
         &:hover {
             background-color: darken(#007bff, 10%);
@@ -203,8 +191,6 @@
     }
 
     .notification {
-        display: none;
-
         &.show {
             display: block;
             padding: 10px;
@@ -216,7 +202,6 @@
         }
     }
 }
-
 
 .notificationMessage {
     position: fixed;
@@ -233,14 +218,16 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     visibility: hidden;
     font-size: 18px;
-    /* oculta inicialmente */
     opacity: 0;
     transition: opacity 0.5s, visibility 0.5s;
     z-index: 300;
-    //font-size: 2rem;
-}
 
-.notificationMessage.show {
-    visibility: visible;
-    opacity: 1;
+    &.show {
+        visibility: visible;
+        opacity: 1;
+
+        @media (max-width: 768px) {
+            font-size: 18px;
+        }
+    }
 }

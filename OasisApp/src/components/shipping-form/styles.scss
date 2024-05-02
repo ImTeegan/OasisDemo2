@@ -135,3 +135,30 @@
         }
     }
 }
+
+@media (max-width: 768px) {
+
+    .shipping-form {
+        margin-top: 0;
+        max-width: 350px;
+    }
+
+
+    .crumb-path {
+        flex-direction: column;
+        margin: 0 1rem;
+        margin-top: 6rem;
+
+        span,
+        strong {
+            font-size: 13px;
+        }
+
+        p {
+            margin-top: 1rem;
+        }
+
+
+    }
+
+}

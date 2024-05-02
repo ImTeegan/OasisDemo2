@@ -132,3 +132,19 @@
 
     }
 }
+
+@media (max-width: 768px) {
+
+    .payment-form {
+        form {
+
+            .form-group {
+                max-width: 300px;
+            }
+
+
+        }
+    }
+
+
+}
