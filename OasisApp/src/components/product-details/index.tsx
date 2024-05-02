@@ -81,10 +81,10 @@ const ProductDetailsComponent: React.FC = () => {
                 <div>
                     <p>Cantidad:</p>
                     <button onClick={() => handleQuantityChange(-1)}>-</button>
-                    <input type="text" value={quantity} readOnly />
+                    <input aria-label='cantidad' type="text" value={quantity} readOnly />
                     <button onClick={() => handleQuantityChange(1)}>+</button>
                 </div>
-                <button className='buttonAdd' onClick={() => addProductToCart(product)}>Agregar al carrito<img src={shoppingBag} /></button>
+                <button className='buttonAdd' onClick={() => addProductToCart(product)}>Agregar al carrito<img src={shoppingBag} alt="Cart" /></button>
             </div>
             <div className={`notification ${showNotification ? 'show' : ''}`}>
                 {notificationMessage}

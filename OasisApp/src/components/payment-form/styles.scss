@@ -9,6 +9,7 @@
     padding: 20px;
     padding-bottom: 14.6rem;
 
+
     .form {
         background: white;
         padding: 25px;
@@ -16,6 +17,8 @@
         //box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         width: 100%;
         max-width: 500px;
+        border-radius: 5px;
+        border: solid 1px #ccc;
 
         .form-group {
             position: relative;

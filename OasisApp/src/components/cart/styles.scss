@@ -1,56 +1,17 @@
 @import '../../styles/global.scss';
 
-.crumb-path1 {
+
+
+.cart-summary {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    background: #eef2f5; // Light blue background for a soft appearance
-    padding: 12px 24px;
-    border-radius: 10px;
-    //box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-    //margin-bottom: 20px;
-    margin: 0rem 4rem;
-    margin-top: 6rem;
-    //margin-bottom: 2rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-    span,
-    strong {
-        font-size: 16px;
-        color: #33475b; // Deep blue color for a professional look
-
-        &:not(:last-child)::after {
-            content: " > ";
-            margin: 0 5px;
-            color: #7f8c9a; // Light grey for separators to reduce visual clutter
-        }
-    }
-
-    strong {
-        font-weight: 800; // Slightly bolder than normal but less than bold
-        color: $color-paleta2-2; // Bright blue to highlight the current step
-    }
-
-    p {
-        margin: 0; // Reset default margins
-        font-size: 16px;
-        color: #1a1a1a; // Dark grey for contrast and easy readability
-        font-weight: 500; // Medium font weight for importance without being overpowering
-
-        span {
-            color: #d93025; // Red color for numbers to draw attention
-        }
-    }
-}
-
-.cart-summary1 {
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem 10rem;
+    padding: 5rem 10rem;
     // background-color: #f8f8f8;
     //border-radius: 8px;
     //margin: 20px;
     gap: 2rem;
+
+    @media (max-width: 999px) {}
 
     &__cards {
         display: flex;
@@ -99,8 +60,8 @@
             }
 
             img {
-                width: 110px;
-                height: 10px;
+                width: 140px;
+                height: 140px;
                 margin-right: 20px;
                 float: left;
                 object-fit: cover;
@@ -206,10 +167,10 @@
 }
 
 @media (max-width: 768px) {
-    .cart-summary1 {
+    .cart-summary {
         display: grid;
         grid-template-rows: 3fr 1fr;
-        padding: 2rem 1rem;
+        padding: 5rem 1rem;
 
         &__cards {
             //width: 300px;
@@ -231,27 +192,19 @@
 
         &__rightsection {
             justify-self: center;
+            width: 350px;
+            padding-top: 0;
         }
     }
 
-    .crumb-path1 {
-        margin: 0 1rem;
-        margin-top: 6rem;
 
-        span,
-        strong {
-            font-size: 13px;
-        }
-
-
-    }
 
 }
 
 @media (min-width: 769px) and (max-width: 999px) {
-    .cart-summary1 {
+    .cart-summary {
 
-        padding: 2rem 1rem;
+        padding: 5rem 1rem;
         gap: 2rem;
 
     }

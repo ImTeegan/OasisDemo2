@@ -9,6 +9,7 @@ import ProductDetails from './views/product-details';
 import Checkout from './views/checkout';
 import Create from './views/create';
 import LogIn from './views/LogIn';
+import Cart from './views/cart';
 
 
 function App() {
@@ -23,6 +24,8 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/create" element={<Create />} />
         <Route path="/login" element={<LogIn />} />
+        <Route path="/cart" element={<Cart />} />
+
       </Routes>
     </>
   )

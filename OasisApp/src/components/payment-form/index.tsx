@@ -36,6 +36,9 @@ const PaymentForm = ({ onPurchase, onPrevious }: { onPurchase: () => void, onPre
     const totalPrice = selectedProducts.reduce((acc, product) => acc + product.price * product.quantity, 0);
     const totalItems = selectedProducts.reduce((total, product) => total + product.quantity, 0);
 
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1;
+
     const validateCardNumber = (number) => {
         const visaRegex = /^4[0-9]{12}(?:[0-9]{3})?$/;
         const mastercardRegex = /^5[1-5][0-9]{14}$/;
@@ -63,6 +66,10 @@ const PaymentForm = ({ onPurchase, onPrevious }: { onPurchase: () => void, onPre
 
         if (!expiryMonth || !expiryYear) {
             errors.expiryDate = "Expiry date is required";
+            isValid = false;
+        } else if (parseInt(expiryYear) < currentYear || (parseInt(expiryYear) === currentYear && parseInt(expiryMonth) < currentMonth)) {
+            // Si el año de expiración es menor que el año actual, o si el año es el mismo pero el mes de expiración es anterior al mes actual
+            errors.expiryDate = "The card has expired";
             isValid = false;
         }
 
@@ -101,10 +108,17 @@ const PaymentForm = ({ onPurchase, onPrevious }: { onPurchase: () => void, onPre
     };
 
     const handleCardNumberChange = (e) => {
-        const number = e.target.value;
-        setCardNumber(number);
-        setCardType(getCardType(number));
+        let { value } = e.target;
+        value = value.replace(/\D/g, ''); // Elimina cualquier caracter no numérico
+        value = value.substring(0, 16); // Limita la longitud a 16 números
+
+        // Añade un espacio cada 4 números
+        value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+
+        setCardNumber(value);
+        setCardType(getCardType(value.replace(/\s+/g, ''))); // Elimina espacios antes de determinar el tipo
     };
+
 
     const getCardType = (number) => {
         const visaRegex = /^4[0-9]{12}(?:[0-9]{3})?$/;
@@ -130,7 +144,7 @@ const PaymentForm = ({ onPurchase, onPrevious }: { onPurchase: () => void, onPre
                 <form onSubmit={(e) => e.preventDefault()} className="form">
                     <h2>Información de pago</h2>
                     <div className="form-group">
-                        <input type="text" value={cardNumber} onChange={handleCardNumberChange} placeholder="Número de Tarjeta" className="input-field" />
+                        <input type="text" value={cardNumber} onChange={handleCardNumberChange} placeholder="Número de Tarjeta" className="input-field" maxLength="19" />
                         <div className="card-logo">
                             {cardType === 'Visa' && <img src={visaLogo} alt="Visa" />}
                             {cardType === 'MasterCard' && <img src={mastercardLogo} alt="MasterCard" />}
@@ -143,13 +157,13 @@ const PaymentForm = ({ onPurchase, onPrevious }: { onPurchase: () => void, onPre
                     </div>
 
                     <div className="form-group expiry-group">
-                        <select className="input-field" value={expiryMonth} onChange={e => setExpiryMonth(e.target.value)}>
+                        <select aria-label='mes' className="input-field" value={expiryMonth} onChange={e => setExpiryMonth(e.target.value)}>
                             <option value="">Mes</option>
                             {[...Array(12)].map((_, i) => (
                                 <option key={i + 1} value={i + 1}>{i + 1}</option>
                             ))}
                         </select>
-                        <select className="input-field" value={expiryYear} onChange={e => setExpiryYear(e.target.value)}>
+                        <select aria-label='año' className="input-field" value={expiryYear} onChange={e => setExpiryYear(e.target.value)}>
                             <option value="">Año</option>
                             {[...Array(12)].map((_, i) => (
                                 <option key={2024 + i} value={2024 + i}>{2024 + i}</option>

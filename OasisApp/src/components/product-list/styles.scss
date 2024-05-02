@@ -170,7 +170,7 @@
         .cat-dat {
             font-style: italic;
             font-size: 1rem;
-            color: grey;
+            color: black;
             padding-left: 1rem;
             margin-bottom: 1rem;
         }
@@ -218,8 +218,7 @@
     border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     visibility: hidden;
-    font-size: 25px;
-    /* oculta inicialmente */
+    font-size: 17px;
     opacity: 0;
     // transition: opacity 0.5s, visibility 0.5s;
 

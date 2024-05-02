@@ -10,7 +10,7 @@
     //box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
     margin-bottom: 20px;
     margin: 6rem 4rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
     span,
@@ -26,8 +26,8 @@
     }
 
     strong {
-        font-weight: 600; // Slightly bolder than normal but less than bold
-        color: #1a73e8; // Bright blue to highlight the current step
+        font-weight: 800; // Slightly bolder than normal but less than bold
+        color: $color-paleta2-2; // Bright blue to highlight the current step
     }
 
     p {
@@ -56,8 +56,9 @@
     width: 100%;
     max-width: 500px;
     margin: auto;
-    margin-top: 2rem;
+    margin-top: 0rem;
     margin-bottom: 3rem;
+    padding-top: 0;
 
     .titleshipping {
         align-self: flex-start;
@@ -68,7 +69,7 @@
         padding-right: 1rem;
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
 
             label {
                 display: block;
@@ -77,9 +78,21 @@
                 margin-bottom: 0.5rem;
             }
 
-            input,
-            select {
+            input {
                 width: 100%;
+                padding: 10px;
+                border: 2px solid #e0e0e0;
+                border-radius: 4px;
+                transition: border-color 0.3s;
+
+                &:focus {
+                    border-color: $color-paleta2-2;
+                    outline: none;
+                }
+            }
+
+            select {
+                width: 105%;
                 padding: 10px;
                 border: 2px solid #e0e0e0;
                 border-radius: 4px;

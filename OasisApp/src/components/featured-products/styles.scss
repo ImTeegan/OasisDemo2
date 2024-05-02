@@ -2,8 +2,8 @@
 
 
 .featuredProducts {
-    margin: 1rem 4rem;
-    margin-bottom: 3rem;
+    margin: 3rem 4rem;
+    margin-bottom: 4rem;
 
     @media (max-width: 768px) {
         margin: 2rem 0.7rem;
@@ -22,7 +22,7 @@
 
         .link-style {
             text-decoration: none;
-            color: #007bff;
+            color: $color-paleta2-2;
             font-weight: bold;
         }
 

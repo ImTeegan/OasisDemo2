@@ -23,20 +23,27 @@ const ShippingForm = ({ onNext, onPrevious, shippingData, setShippingData }) => 
             setError('El código postal debe ser un número de 5 dígitos.');
             return false;
         }
-        setError(''); // Limpiar errores previos si todo está correcto
+        setError('');
         return true;
     };
 
     const handleNextClick = () => {
         if (validateForm()) {
-            onNext(); // Solo avanza si la validación es exitosa
+            onNext();
         }
     };
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setShippingData(prev => ({ ...prev, [name]: value }));
-        if (error) validateForm(); // Revalidar mientras el usuario corrige errores
+        if (name === 'zipCode') {
+
+            const filteredValue = value.replace(/[^0-9]/g, '').slice(0, 5);
+            setShippingData(prev => ({ ...prev, [name]: filteredValue }));
+        } else {
+            setShippingData(prev => ({ ...prev, [name]: value }));
+        }
+
+        if (error) validateForm();
     };
 
     return (
@@ -78,7 +85,7 @@ const ShippingForm = ({ onNext, onPrevious, shippingData, setShippingData }) => 
 
                     <div className="form-group">
                         <label htmlFor="zipCode">Código Postal:*</label>
-                        <input type="text" id="zipCode" name="zipCode" value={shippingData.zipCode} onChange={handleChange} required />
+                        <input type="text" id="zipCode" name="zipCode" value={shippingData.zipCode} onChange={handleChange} required maxLength={5} />
                     </div>
 
                     {error && <p className="error-message">{error}</p>}

@@ -47,7 +47,7 @@
         list-style: none;
         display: flex;
         padding-top: 0.4rem;
-        font-size: 18px;
+        font-size: 15px;
 
         .link-tabs {
             margin: 0 10px;
@@ -109,7 +109,7 @@
 
         .navMenuActive {
             position: absolute;
-            background-color: rgba(255, 255, 255, 0.7);
+            background-color: rgba(255, 255, 255, 1);
             top: 60px;
             left: 0;
             right: 0;

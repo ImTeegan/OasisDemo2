@@ -110,7 +110,7 @@ const Navbar: React.FC = () => {
                         <div className="user-menu" onClick={toggleDropdown}>
                             {user.name} ▼
                             <div className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`}>
-                                <div className='element-dm'><Link className='clasea-test' to="/profile"> <img className='userImg' src={userIcon} alt="" /> Perfil</Link></div>
+                                {/* <div className='element-dm'><Link className='clasea-test' to="/profile"> <img className='userImg' src={userIcon} alt="" /> Perfil</Link></div> */}
                                 <div className='element-dm'><button className='plain-button' onClick={handleLogout}><img className='userImg' src={logoutIcon} alt="" />Cerrar sesión</button></div>
                             </div>
                         </div>
@@ -138,7 +138,7 @@ const Navbar: React.FC = () => {
                                             <p>Cantidad: {product.quantity}</p>
                                             <span>₡{product.price}</span>
                                         </div>
-                                        <button onClick={() => deleteProduct(product.id)}> <img className='imgTrash' src={trash}></img> </button>
+                                        <button aria-label='delete' onClick={() => deleteProduct(product.id)}> <img aria-label='delete' className='imgTrash' src={trash}></img> </button>
                                     </div>
                                 </div>
                             ))
@@ -148,7 +148,7 @@ const Navbar: React.FC = () => {
                                 <Link className="link-style" to="/product-list">Agregar Productos</Link>
                             </div>
                         )}
-                        {selectedProducts.length > 0 && <Link className='link-style' to="/checkout">Ver Carrito</Link>}
+                        {selectedProducts.length > 0 && <Link className='link-style' to="/cart">Ver Carrito</Link>}
                     </div>
                 )}
 

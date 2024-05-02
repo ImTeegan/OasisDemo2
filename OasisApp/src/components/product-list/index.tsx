@@ -38,16 +38,16 @@ const ProductListComponent = () => {
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(event.target.value);
-        setCurrentPage(1); // Reset to first page with new search
+        setCurrentPage(1);
     };
 
     const handleCategoryChange = (category: string, isChecked: boolean) => {
         if (isChecked) {
-            setFilterCategory([...filterCategory, category]);//here add the category in case it get marked
+            setFilterCategory([...filterCategory, category]);
         } else {
-            setFilterCategory(filterCategory.filter(cat => cat !== category));//delete categry from the array. 
+            setFilterCategory(filterCategory.filter(cat => cat !== category));
         }
-        setCurrentPage(1); // Reset to first page with new category filter
+        setCurrentPage(1);
     };
 
     const handleSortPrice = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -131,7 +131,7 @@ const ProductListComponent = () => {
                             {category}
                         </label>
                     ))}
-                    <select onChange={handleSortPrice}>
+                    <select aria-label='orden' onChange={handleSortPrice}>
                         <option value="">Seleccionar orden</option>
                         <option value="lowToHigh">Precio: Bajo a Alto</option>
                         <option value="highToLow">Precio: Alto a Bajo</option>
