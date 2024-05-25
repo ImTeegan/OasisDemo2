@@ -1,21 +1,16 @@
-// src/components/PaymentForm/PaymentForm.tsx
-
 import './styles.scss';
 import React, { useState } from 'react';
 import visaLogo from '../../../public/images/visalogo.png';
 import mastercardLogo from '../../../public/images/mastercardlogo.png';
 import amexLogo from '../../../public/images/aelogo.png';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { selectedProductsState } from '../../atoms/cartAtom';
 import ThreeDots from '../../../public/svg-animations/three-dots.svg';
-import Check from '../../../public/svg-animations/checkc.svg';
 import { useNavigate } from 'react-router-dom';
-import { useResetRecoilState } from 'recoil';
+import axios from 'axios';
+import { userState } from '../../atoms/sessionState';
 
-
-
-
-const PaymentForm = ({ onPurchase, onPrevious }: { onPurchase: () => void, onPrevious: () => void }) => {
+const PaymentForm = ({ onPrevious, shippingData }) => {
     const [cardNumber, setCardNumber] = useState('');
     const [cardType, setCardType] = useState('');
     const [cardHolder, setCardHolder] = useState('');
@@ -23,15 +18,12 @@ const PaymentForm = ({ onPurchase, onPrevious }: { onPurchase: () => void, onPre
     const [expiryYear, setExpiryYear] = useState('');
     const [cvv, setCvv] = useState('');
     const [errors, setErrors] = useState({});
-    const [error, setError] = useState('');
-    const [selectedProducts, setSelectedProducts] = useRecoilState(selectedProductsState);
     const [showLoadingModal, setShowLoadingModal] = useState(false);
     const [showThankYouModal, setShowThankYouModal] = useState(false);
-
-    const navigate = useNavigate();
+    const [selectedProducts, setSelectedProducts] = useRecoilState(selectedProductsState);
     const resetCart = useResetRecoilState(selectedProductsState);
-
-
+    const navigate = useNavigate();
+    const [user, setUser] = useRecoilState(userState);
 
     const totalPrice = selectedProducts.reduce((acc, product) => acc + product.price * product.quantity, 0);
     const totalItems = selectedProducts.reduce((total, product) => total + product.quantity, 0);
@@ -68,7 +60,6 @@ const PaymentForm = ({ onPurchase, onPrevious }: { onPurchase: () => void, onPre
             errors.expiryDate = "Expiry date is required";
             isValid = false;
         } else if (parseInt(expiryYear) < currentYear || (parseInt(expiryYear) === currentYear && parseInt(expiryMonth) < currentMonth)) {
-            // Si el año de expiración es menor que el año actual, o si el año es el mismo pero el mes de expiración es anterior al mes actual
             errors.expiryDate = "The card has expired";
             isValid = false;
         }
@@ -85,7 +76,7 @@ const PaymentForm = ({ onPurchase, onPrevious }: { onPurchase: () => void, onPre
     const defaultOptions = {
         loop: true,
         autoplay: true,
-        animationData: Check,
+        animationData: ThreeDots,
         rendererSettings: {
             preserveAspectRatio: 'xMidYMid slice'
         }
@@ -95,15 +86,51 @@ const PaymentForm = ({ onPurchase, onPrevious }: { onPurchase: () => void, onPre
         if (validate()) {
             console.log("Validación pasada, mostrando modal...");
             setShowLoadingModal(true);
-            setTimeout(() => {
+
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) return;
+
+                const response = await axios.get('http://localhost:8080/shoppingcart/total', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                const totalPrice = response.data;
+
+                const orderData = {
+                    date: new Date().toISOString(),
+                    address1: shippingData.address1,
+                    address2: shippingData.address2,
+                    city: shippingData.city,
+                    province: shippingData.province,
+                    zipCode: shippingData.zipCode,
+                    cardHolder,
+                    status: 'PENDIENTE',
+                    cost: totalPrice,
+                    card: cardNumber.replace(/\s+/g, ''),
+                };
+
+                await axios.post('http://localhost:8080/orders', orderData, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
                 setShowLoadingModal(false);
                 setShowThankYouModal(true);
+
                 setTimeout(() => {
                     setShowThankYouModal(false);
                     resetCart();
                     navigate('/');
                 }, 5000);
-            }, 5000);
+
+            } catch (error) {
+                console.error('Failed to place order:', error);
+                setShowLoadingModal(false);
+            }
         }
     };
 
@@ -111,14 +138,11 @@ const PaymentForm = ({ onPurchase, onPrevious }: { onPurchase: () => void, onPre
         let { value } = e.target;
         value = value.replace(/\D/g, '');
         value = value.substring(0, 16);
-
-
         value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
 
         setCardNumber(value);
         setCardType(getCardType(value.replace(/\s+/g, '')));
     };
-
 
     const getCardType = (number: string) => {
         const visaRegex = /^4[0-9]{12}(?:[0-9]{3})?$/;
@@ -132,7 +156,6 @@ const PaymentForm = ({ onPurchase, onPrevious }: { onPurchase: () => void, onPre
     };
 
     return (
-
         <>
             <div className='crumb-path'>
                 <div>
@@ -206,7 +229,6 @@ const PaymentForm = ({ onPurchase, onPrevious }: { onPurchase: () => void, onPre
                 </form>
             </div>
         </>
-
     );
 };
 
