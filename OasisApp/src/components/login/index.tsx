@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
+import axios from 'axios';
 import { userState } from '../../atoms/sessionState';
-import { fetchUsers } from '../../services/fetchProducts';
 import './styles.scss';
 
 const LoginComponent = () => {
@@ -20,18 +20,37 @@ const LoginComponent = () => {
             return;
         }
 
-        if (password.length < 8) {
+        /*if (password.length < 8) {
             alert('La contraseña debe tener al menos 8 caracteres.');
             return;
         }
+*/
+        try {
+            const response = await axios.post('http://localhost:8080/auth/login', {
+                email: username,
+                password: password,
+            });
 
-        const users = await fetchUsers();
+            const { token, expiresIn } = response.data;
 
-        const userExists = users.find(user => user.email === username && user.password === password);
-        if (userExists) {
-            setUser({ isLoggedIn: true, name: userExists.name });
+
+            localStorage.setItem('token', token);
+
+
+            const userResponse = await axios.get('http://localhost:8080/users/me', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            const userData = userResponse.data;
+
+
+            setUser({ isLoggedIn: true, name: userData.name, role: userData.role });
+
+
             navigate('/');
-        } else {
+        } catch (error) {
             setError('Credenciales incorrectas');
         }
     };
@@ -61,7 +80,7 @@ const LoginComponent = () => {
                     </label>
                     <button type="submit">Iniciar Sesión</button>
                     {error && <p style={{ color: 'red' }}>{error}</p>}
-
+                    <p className='linktolos'> Aún no tienes una cuenta? <Link to="/signup">Crear cuenta</Link></p>
                 </form>
             </div>
         </div>

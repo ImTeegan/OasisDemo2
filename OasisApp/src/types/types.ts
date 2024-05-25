@@ -9,13 +9,14 @@ export interface Product {
   description: string;
 }
 
-// Interface para objetos de flores
 export interface CustomItem {
   id: number;
-  nombre: string;
-  precio: number;
-  imagen: string;
-  tipo: string;
+  name: string;
+  price: number;
+  imageUrl: string;
+  type: string;
+  category: string;
+  description: string;
 }
 
 export interface User {

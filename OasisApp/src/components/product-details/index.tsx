@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { fetchProducts } from '../../services/fetchProducts';
+import axios from 'axios';
 import { Product } from '../../types/types';
 import './styles.scss';
 import shoppingBag from '../../../public/icons/shoppingBag.png';
 import { useRecoilState } from 'recoil';
 import { selectedProductsState } from '../../atoms/cartAtom';
 import { userState } from '../../atoms/sessionState';
-
 
 const ProductDetailsComponent: React.FC = () => {
     const { id } = useParams(); // Obtener el ID del producto desde la URL
@@ -22,9 +21,8 @@ const ProductDetailsComponent: React.FC = () => {
     useEffect(() => {
         const loadProduct = async () => {
             try {
-                const products = await fetchProducts();
-                const foundProduct = products.find(p => p.id.toString() === id); // Asumiendo que id es un string
-                setProduct(foundProduct);
+                const response = await axios.get(`http://localhost:8080/products/${id}`);
+                setProduct(response.data);
             } catch (error) {
                 console.error('Failed to fetch product details:', error);
             }
@@ -33,48 +31,68 @@ const ProductDetailsComponent: React.FC = () => {
         loadProduct();
     }, [id]);
 
-    const addProductToCart = () => {
+    const addProductToCart = async () => {
         if (!user.isLoggedIn) {
             // Si no está logueado, redirige al login
             navigate('/login');
             return;
         }
 
-        const productToAdd = { ...product, quantity }; // Include the quantity in the product object
-        setSelectedProducts(prevProducts => {
-            const existingProduct = prevProducts.find(p => p.id === productToAdd.id);
-            if (existingProduct) {
-                // Update the quantity if the product is already in the cart
-                return prevProducts.map(p => p.id === productToAdd.id ? { ...p, quantity: p.quantity + productToAdd.quantity } : p);
-            } else {
-                // Add new product to the cart
-                return [...prevProducts, productToAdd];
-            }
+        const token = localStorage.getItem('token');
+        if (!token) return;
 
-        });
-        setNotificationMessage("Producto agregado al carrito");
-        setShowNotification(true);
+        try {
+            const response = await axios.post('http://localhost:8080/shoppingcart/addProduct', {
+                productId: product?.id,
+                quantity: quantity,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
 
-        setTimeout(() => {
-            setShowNotification(false);
-        }, 5000);
+            // Actualizar el estado del carrito con la respuesta del servidor
+            const updatedProduct = { ...product, quantity };
+            setSelectedProducts(prevProducts => {
+                const existingProduct = prevProducts.find(p => p.id === updatedProduct.id);
+                if (existingProduct) {
+                    return prevProducts.map(p => p.id === updatedProduct.id ? { ...p, quantity: p.quantity + updatedProduct.quantity } : p);
+                } else {
+                    return [...prevProducts, updatedProduct];
+                }
+            });
+
+            setNotificationMessage("Producto agregado al carrito");
+            setShowNotification(true);
+
+            setTimeout(() => {
+                setShowNotification(false);
+            }, 5000);
+
+        } catch (error) {
+            console.error('Failed to add product to cart:', error);
+            setNotificationMessage("Error al agregar el producto al carrito");
+            setShowNotification(true);
+
+            setTimeout(() => {
+                setShowNotification(false);
+            }, 5000);
+        }
     };
 
-    const handleQuantityChange = (num) => {
+    const handleQuantityChange = (num: number) => {
         setQuantity(prev => Math.max(1, prev + num)); // Prevents quantity from going below 1
     };
 
     if (!product) return <div>Loading...</div>;
 
-
-
     return (
         <div className='productDetails'>
             <div className='productDetails__containerimg'>
-                <img src={product.image1} alt={product.productName} />
+                <img src={product.imageUrl} alt={product.name} />
             </div>
             <div className='productDetails__containerdetails'>
-                <h1>{product.productName}</h1>
+                <h1>{product.name}</h1>
                 <p className='productDetails__containerdetails__cat'>{product.category}</p>
                 <p className='productDetails__containerdetails__des'>{product.description}</p>
                 <p className='productDetails__containerdetails__price'>₡{product.price}</p>
@@ -84,13 +102,11 @@ const ProductDetailsComponent: React.FC = () => {
                     <input aria-label='cantidad' type="text" value={quantity} readOnly />
                     <button onClick={() => handleQuantityChange(1)}>+</button>
                 </div>
-                <button className='buttonAdd' onClick={() => addProductToCart(product)}>Agregar al carrito<img src={shoppingBag} alt="Cart" /></button>
+                <button className='buttonAdd' onClick={addProductToCart}>Agregar al carrito<img src={shoppingBag} alt="Cart" /></button>
             </div>
             <div className={`notification ${showNotification ? 'show' : ''}`}>
                 {notificationMessage}
             </div>
-
-
         </div>
     );
 };

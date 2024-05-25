@@ -3,8 +3,8 @@ import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist({
-    key: 'recoilPersist', // key para el almacenamiento local
-    storage: localStorage, // Opcionalmente, puedes cambiar a sessionStorage
+    key: 'recoilPersist',
+    storage: localStorage,
 });
 
 export const selectedProductsState = atom<Product[]>({

@@ -5,9 +5,11 @@ import './styles.scss';
 import { useRecoilState } from 'recoil';
 import { selectedProductsState } from '../../atoms/cartAtom';
 import trash from '../../../public/icons/trashIcon.png';
-
+import { userState } from '../../atoms/sessionState';
+import emptycart from '../../../public/images/empty_cart.png'
 
 const CartComponent = () => {
+    const [user, setUser] = useRecoilState(userState);
     const [selectedProducts, setSelectedProducts] = useRecoilState(selectedProductsState);
     const navigate = useNavigate();
 
@@ -32,6 +34,17 @@ const CartComponent = () => {
 
     const totalPrice = selectedProducts.reduce((acc, product) => acc + product.price * product.quantity, 0);
     const totalItems = selectedProducts.reduce((total, product) => total + product.quantity, 0);
+
+    if (selectedProducts.length === 0) {
+        return (
+            <div className='cart-summary-empty'>
+                <div className='empycart'>
+                    <img src={emptycart} alt="carrito vacio" />
+                    <h3>El carrito está vacío</h3>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <>

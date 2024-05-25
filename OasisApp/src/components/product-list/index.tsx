@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Product } from '../../types/types';
-import { fetchProducts } from '../../services/fetchProducts';
+import axios from 'axios';
 import './styles.scss';
 import { useRecoilState } from 'recoil';
 import { selectedProductsState } from '../../atoms/cartAtom';
 import { userState } from '../../atoms/sessionState';
-import { useNavigate, useParams } from 'react-router-dom';
-
-
 
 const ProductListComponent = () => {
     const [products, setProducts] = useState<Product[]>([]);
@@ -17,24 +14,44 @@ const ProductListComponent = () => {
     const [search, setSearch] = useState('');
     const [filterCategory, setFilterCategory] = useState<string[]>([]);
     const [sortPrice, setSortPrice] = useState('');
+    const [totalPages, setTotalPages] = useState<number>(1);
     const [selectedProducts, setSelectedProducts] = useRecoilState(selectedProductsState);
     const [showNotification, setShowNotification] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
-    const [user, setUser] = useRecoilState(userState);  // Estado de sesión
+    const [user, setUser] = useRecoilState(userState);
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         const loadProducts = async () => {
             try {
-                const fetchedProducts = await fetchProducts();
-                setProducts(fetchedProducts);
+                const response = await axios.get('http://localhost:8080/products/getAllTypeProducts', {
+                    params: {
+                        page: currentPage - 1,
+                        size: productsPerPage,
+                        search: search || undefined,
+                        categories: filterCategory.length ? filterCategory.join(',') : undefined,
+                        sort: sortPrice || undefined
+                    }
+                });
+                setProducts(response.data.content);
+                setTotalPages(response.data.totalPages);
             } catch (error) {
                 console.log('Failed to fetch products', error);
             }
         };
 
         loadProducts();
-    }, []);
+
+        const query = new URLSearchParams();
+        if (search) query.set('search', search);
+        if (filterCategory.length) query.set('categories', filterCategory.join(','));
+        if (sortPrice) query.set('sort', sortPrice);
+        query.set('page', String(currentPage));
+        query.set('size', String(productsPerPage));
+
+        navigate(`${location.pathname}?${query.toString()}`, { replace: true });
+    }, [currentPage, search, filterCategory, sortPrice]);
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(event.target.value);
@@ -54,75 +71,67 @@ const ProductListComponent = () => {
         setSortPrice(event.target.value);
     };
 
-    const filteredProducts = products
-        .filter(product =>
-            product.productName.toLowerCase().includes(search.toLowerCase()) ||
-            product.category.toLowerCase().includes(search.toLowerCase()))
-        .filter(product =>
-            filterCategory.length === 0 || filterCategory.includes(product.category))
-        .sort((a, b) => {
-            if (sortPrice === 'lowToHigh') {
-                return a.price - b.price;
-            } else if (sortPrice === 'highToLow') {
-                return b.price - a.price;
-            }
-            return 0;
-        });
-
-    const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
-    const indexOfLastProduct = currentPage * productsPerPage;
-    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-    const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
-
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
     const clearFilters = () => {
         setSearch('');
         setFilterCategory([]);
         setSortPrice('');
-        setCurrentPage(1);  // Restablece también la página a la primera
+        setCurrentPage(1);
     };
 
-    const addProductToCart = (productToAdd: Product) => {
+    const addProductToCart = async (productToAdd: Product) => {
         if (!user.isLoggedIn) {
-            // Si no está logueado, redirige al login
             navigate('/login');
             return;
         }
 
-        setSelectedProducts(prevProducts => {
-            const existingProductIndex = prevProducts.findIndex(p => p.id === productToAdd.id);
-            if (existingProductIndex !== -1) {
-                // El producto ya existe, incrementar la cantidad
-                const newProducts = [...prevProducts];
-                newProducts[existingProductIndex] = {
-                    ...newProducts[existingProductIndex],
-                    quantity: newProducts[existingProductIndex].quantity + 1
-                };
-                return newProducts;
-            } else {
-                // Añadir nuevo producto al carrito con cantidad inicial de 1
-                return [...prevProducts, { ...productToAdd, quantity: 1 }];
-            }
-        });
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) return;
 
-        setNotificationMessage("Producto agregado al carrito");
-        setShowNotification(true);
+            await axios.post('http://localhost:8080/shoppingcart/addProduct', {
+                productId: productToAdd.id,
+                quantity: 1
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
 
-        setTimeout(() => {
-            setShowNotification(false);
-        }, 5000);
+            setSelectedProducts(prevProducts => {
+                const existingProductIndex = prevProducts.findIndex(p => p.id === productToAdd.id);
+                if (existingProductIndex !== -1) {
+                    const newProducts = [...prevProducts];
+                    newProducts[existingProductIndex] = {
+                        ...newProducts[existingProductIndex],
+                        quantity: newProducts[existingProductIndex].quantity + 1
+                    };
+                    return newProducts;
+                } else {
+                    return [...prevProducts, { ...productToAdd, quantity: 1 }];
+                }
+            });
+
+            setNotificationMessage("Producto agregado al carrito");
+            setShowNotification(true);
+
+            setTimeout(() => {
+                setShowNotification(false);
+            }, 5000);
+        } catch (error) {
+            console.error('Failed to add product to cart', error);
+        }
     };
 
     return (
         <div>
             <div className='product-list-container'>
                 <div className="filters-container">
-                    <input type="text" placeholder="Buscar productos" onChange={handleSearch} />
+                    <input type="text" placeholder="Buscar productos" onChange={handleSearch} value={search} />
                     <h3>Categorías</h3>
                     {['Arreglo', 'Ramo', 'Plantas', 'Oficina'].map((category) => (
                         <label key={category}>
-
                             <input
                                 type="checkbox"
                                 checked={filterCategory.includes(category)}
@@ -131,7 +140,7 @@ const ProductListComponent = () => {
                             {category}
                         </label>
                     ))}
-                    <select aria-label='orden' onChange={handleSortPrice}>
+                    <select aria-label='orden' onChange={handleSortPrice} value={sortPrice}>
                         <option value="">Seleccionar orden</option>
                         <option value="lowToHigh">Precio: Bajo a Alto</option>
                         <option value="highToLow">Precio: Alto a Bajo</option>
@@ -140,27 +149,21 @@ const ProductListComponent = () => {
                 </div>
 
                 <div className='cards'>
-                    {currentProducts.map(product => (
+                    {products.map(product => (
                         <div className='cards__card' key={product.id}>
                             <Link to={`/product-details/${product.id}`} style={{ textDecoration: 'none' }}>
-                                <img src={product.image1} alt="" />
+                                <img src={product.imageUrl} alt="" />
                                 <div className='data-product'>
-                                    <h2>{product.productName}</h2>
+                                    <h2>{product.name}</h2>
                                     <p>₡{product.price}</p>
                                 </div>
                                 <div className='cat-dat'>{product.category}</div>
-
                             </Link>
                             <button className='addButton' onClick={() => addProductToCart(product)}>Agregar al carrito</button>
                         </div>
-
                     ))}
                 </div>
             </div>
-
-
-
-
 
             <div className={`notification ${showNotification ? 'show' : ''}`}>
                 {notificationMessage}
@@ -179,10 +182,7 @@ const ProductListComponent = () => {
                     Siguiente
                 </button>
             </div>
-
         </div>
-
-
     );
 };
 

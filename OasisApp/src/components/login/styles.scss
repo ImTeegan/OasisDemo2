@@ -8,6 +8,8 @@
     background: url('../../../public/images/banneropc7.png') no-repeat center center fixed;
     background-size: cover;
 
+
+
     .login-container {
         background: $color-paleta2-4;
         padding: 2rem;
@@ -60,6 +62,10 @@
                 &:hover {
                     background-color: darken($color-paleta2-2, 10%);
                 }
+            }
+
+            .linktolos {
+                align-self: center;
             }
         }
     }

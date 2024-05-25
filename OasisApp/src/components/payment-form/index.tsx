@@ -39,7 +39,7 @@ const PaymentForm = ({ onPurchase, onPrevious }: { onPurchase: () => void, onPre
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth() + 1;
 
-    const validateCardNumber = (number) => {
+    const validateCardNumber = (number: string) => {
         const visaRegex = /^4[0-9]{12}(?:[0-9]{3})?$/;
         const mastercardRegex = /^5[1-5][0-9]{14}$/;
         const amexRegex = /^3[47][0-9]{13}$/;
@@ -47,12 +47,12 @@ const PaymentForm = ({ onPurchase, onPrevious }: { onPurchase: () => void, onPre
         if (visaRegex.test(number)) return 'Visa';
         if (mastercardRegex.test(number)) return 'MasterCard';
         if (amexRegex.test(number)) return 'AMEX';
-        return false;
+        return true;
     };
 
     const validate = () => {
         let isValid = true;
-        let errors = {};
+        const errors = {};
 
         if (!cardNumber || validateCardNumber(cardNumber) === false) {
             errors.cardNumber = "Invalid card number";
@@ -109,18 +109,18 @@ const PaymentForm = ({ onPurchase, onPrevious }: { onPurchase: () => void, onPre
 
     const handleCardNumberChange = (e) => {
         let { value } = e.target;
-        value = value.replace(/\D/g, ''); // Elimina cualquier caracter no numérico
-        value = value.substring(0, 16); // Limita la longitud a 16 números
+        value = value.replace(/\D/g, '');
+        value = value.substring(0, 16);
 
-        // Añade un espacio cada 4 números
+
         value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
 
         setCardNumber(value);
-        setCardType(getCardType(value.replace(/\s+/g, ''))); // Elimina espacios antes de determinar el tipo
+        setCardType(getCardType(value.replace(/\s+/g, '')));
     };
 
 
-    const getCardType = (number) => {
+    const getCardType = (number: string) => {
         const visaRegex = /^4[0-9]{12}(?:[0-9]{3})?$/;
         const mastercardRegex = /^5[1-5][0-9]{14}$/;
         const amexRegex = /^3[47][0-9]{13}$/;

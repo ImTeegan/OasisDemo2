@@ -6,7 +6,7 @@ import { selectedProductsState } from '../../atoms/cartAtom';
 
 
 const CartSummary = ({ onNext }: { onNext: () => void }) => {
-    const [selectedProducts, setSelectedProducts] = useRecoilState(selectedProductsState);
+    const [selectedProducts] = useRecoilState(selectedProductsState);
 
     const totalPrice = selectedProducts.reduce((acc, product) => acc + product.price * product.quantity, 0);
     const totalItems = selectedProducts.reduce((total, product) => total + product.quantity, 0);

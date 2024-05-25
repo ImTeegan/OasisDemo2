@@ -1,19 +1,24 @@
+// src/components/featured-products/index.tsx
 import React, { useEffect, useState } from 'react';
-import './styles.scss';
 import { Link } from 'react-router-dom';
 import { Product } from '../../types/types';
 import { fetchProducts } from '../../services/fetchProducts';
+import { useRecoilValue } from 'recoil';
+import { customProductIdState } from '../../atoms/customProductAtom';
+import axios from 'axios';
+import './styles.scss';
 
 const FeaturedProducts: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [itemsToShow, setItemsToShow] = useState(3);
+    const [showModal, setShowModal] = useState(true);
+    const customProductId = useRecoilValue(customProductIdState);
 
     useEffect(() => {
         const loadProducts = async () => {
             try {
                 const fetchedProducts = await fetchProducts();
-
                 setProducts(fetchedProducts.slice(0, 6));
             } catch (error) {
                 console.error('Failed to fetch products', error);
@@ -44,37 +49,50 @@ const FeaturedProducts: React.FC = () => {
     };
 
     const handleNextClick = () => {
-        console.log("currentIndex:", currentIndex, "itemsToShow:", itemsToShow, "product length:", products.length);
-        setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, products.length - 3));
+        setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, products.length - itemsToShow));
     };
 
+    const handleCreateClick = async () => {
+        setShowModal(false);
+        const token = localStorage.getItem('token');
+        if (!token) return;
+
+        try {
+            const response = await axios.post('http://localhost:8080/customProduct/create', {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setCustomProductId(response.data.id);
+        } catch (error) {
+            console.error('Failed to create custom product:', error);
+        }
+    };
 
     return (
-        <>
-            <div className='featuredProducts'>
-                <div className='featuredProducts__titleButton'>
-                    <h3>Los más vendidos</h3>
-                    <Link className='link-style' to="/product-list">Ver todos los productos</Link>
-                </div>
-                <div className='carousel-container'>
-                    <button onClick={handlePrevClick} disabled={currentIndex === 0}>&lt;</button>
-                    <div className='featuredProducts__cards' style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-                        {products.map((product, index) => (
-                            <div className='featuredProducts__cards__card' key={product.id} style={{ backgroundImage: `url(${product.image1})` }}>
-                                <Link className='Linkito' to={`/product-details/${product.id}`}>
-                                    <div className='featuredProducts__cards__card__sale'>Más vendido</div>
-                                    <div className='card-content'>
-                                        <h2 className='tituloCard'>{product.productName}</h2>
-                                        <p className='descCard'>{product.description}</p>
-                                    </div>
-                                </Link>
-                            </div>
-                        ))}
-                    </div>
-                    <button onClick={handleNextClick} disabled={currentIndex >= products.length - itemsToShow - 2}>&gt;</button>
-                </div>
+        <div className='featuredProducts'>
+            <div className='featuredProducts__titleButton'>
+                <h3>Los más vendidos</h3>
+                <Link className='link-style' to="/product-list">Ver todos los productos</Link>
             </div>
-        </>
+            <div className='carousel-container'>
+                <button onClick={handlePrevClick} disabled={currentIndex === 0}>&lt;</button>
+                <div className='featuredProducts__cards' style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+                    {products.map((product, index) => (
+                        <div className='featuredProducts__cards__card' key={product.id} style={{ backgroundImage: `url(${product.image1})` }}>
+                            <Link className='Linkito' to={`/product-details/${product.id}`}>
+                                <div className='featuredProducts__cards__card__sale'>Más vendido</div>
+                                <div className='card-content'>
+                                    <h2 className='tituloCard'>{product.productName}</h2>
+                                    <p className='descCard'>{product.description}</p>
+                                </div>
+                            </Link>
+                        </div>
+                    ))}
+                </div>
+                <button onClick={handleNextClick} disabled={currentIndex >= products.length - itemsToShow}>&gt;</button>
+            </div>
+        </div>
     );
 };
 

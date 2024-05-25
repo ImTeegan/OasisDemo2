@@ -134,7 +134,7 @@
                     position: absolute;
                     top: 10px;
                     right: 10px;
-                    background-color: red;
+                    background-color: rgb(146, 0, 0);
                     color: white;
                     padding: 5px 10px;
                     border-radius: 5px;
@@ -148,4 +148,46 @@
 button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.modal-content h2 {
+    margin-bottom: 16px;
+}
+
+.modal-content ul {
+    text-align: left;
+    margin-bottom: 16px;
+}
+
+.modal-content button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.modal-content button:hover {
+    background-color: #0056b3;
 }

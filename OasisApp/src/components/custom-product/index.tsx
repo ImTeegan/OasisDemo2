@@ -1,68 +1,82 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Product } from '../../types/types';
 import { CustomItem } from '../../types/types';
-import { WrappingPaper } from '../../types/types';
-import { Follaje } from '../../types/types';
-import { fetchProducts } from '../../services/fetchProducts';
-import { fetchCustomItems } from '../../services/fetchProducts';
-import { fetchWrappingPaper } from '../../services/fetchProducts';
-import { fetchFollaje } from '../../services/fetchProducts';
 import './styles.scss';
 import { useRecoilState } from 'recoil';
 import { selectedProductsState } from '../../atoms/cartAtom';
 import { userState } from '../../atoms/sessionState';
+import { customProductIdState } from '../../atoms/customProductAtom';
+import axios from 'axios';
 
 const CustomProduct = () => {
     const [flowers, setFlowers] = useState<CustomItem[]>([]);
-    const [paper, setPaper] = useState<CustomItem[]>([]);
-    const [follaje, setFollaje] = useState<CustomItem[]>([]);
+    const [wrappingPaper, setWrappingPaper] = useState<CustomItem[]>([]);
+    const [foliage, setFoliage] = useState<CustomItem[]>([]);
     const [selectedItems, setSelectedItems] = useState<CustomItem[]>([]);
     const [total, setTotal] = useState(0);
     const [selectedProducts, setSelectedProducts] = useRecoilState(selectedProductsState);
     const [flowerCount, setFlowerCount] = useState(0);
     const [paperCount, setPaperCount] = useState(0);
-    const [follajeCount, setFollajeCount] = useState(0);
-    const [customItems, setCustomItems] = useState<CustomItem[]>([]);
+    const [foliageCount, setFoliageCount] = useState(0);
     const [showNotification, setShowNotification] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
     const [user, setUser] = useRecoilState(userState);
+    const [showModal, setShowModal] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
+    const [customProductId, setCustomProductId] = useRecoilState(customProductIdState);
     const navigate = useNavigate();
 
     useEffect(() => {
         const loadCustomProducts = async () => {
             try {
-                const fetchedCustomsItems = await fetchCustomItems();
+                const [fetchedFlowers, fetchedWrappingPaper, fetchedFoliage] = await Promise.all([
+                    axios.get('http://localhost:8080/products/getAllFlowerItem'),
+                    axios.get('http://localhost:8080/products/getAllPaperItem'),
+                    axios.get('http://localhost:8080/products/getAllFoliageItem')
+                ]);
 
-                setCustomItems(fetchedCustomsItems);
-
+                setFlowers(fetchedFlowers.data);
+                setWrappingPaper(fetchedWrappingPaper.data);
+                setFoliage(fetchedFoliage.data);
             } catch (error) {
-                console.log('Failed to fetch products', error);
+                console.error('Failed to fetch products', error);
             }
-
         };
 
         loadCustomProducts();
     }, []);
 
-    const handleSelectItem = (item: CustomItem) => {
+    const Modal = ({ isOpen, onClose, message }) => {
+        if (!isOpen) return null;
+
+        return (
+            <div className="modal-overlay">
+                <div className="modal-content">
+                    <p>{message}</p>
+                    <button onClick={onClose}>OK</button>
+                </div>
+            </div>
+        );
+    };
+
+    const handleSelectItem = async (item: CustomItem) => {
         let canAddItem = false;
-        switch (item.tipo) {
-            case 'flor':
+        switch (item.category) {
+            case 'Flor':
                 if (flowerCount < 3) {
                     setFlowerCount(flowerCount + 1);
                     canAddItem = true;
                 }
                 break;
-            case 'papel':
+            case 'Papel':
                 if (paperCount < 2) {
                     setPaperCount(paperCount + 1);
                     canAddItem = true;
                 }
                 break;
-            case 'follaje':
-                if (follajeCount < 2) {
-                    setFollajeCount(follajeCount + 1);
+            case 'Follaje':
+                if (foliageCount < 2) {
+                    setFoliageCount(foliageCount + 1);
                     canAddItem = true;
                 }
                 break;
@@ -71,29 +85,43 @@ const CustomProduct = () => {
         }
 
         if (canAddItem) {
-            setSelectedItems(currentItems => [...currentItems, item]);
-            setTotal(currentTotal => currentTotal + item.precio);
-            setNotificationMessage(`${item.nombre} agregado a tu ramo personalizado.`);
-            setShowNotification(true);
-            setTimeout(() => setShowNotification(false), 5000);
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) return;
+
+                await axios.post('http://localhost:8080/customProduct/addItem', {
+                    customProductId,
+                    productId: item.id
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                setSelectedItems(currentItems => [...currentItems, item]);
+                setTotal(currentTotal => currentTotal + item.price);
+                setNotificationMessage(`${item.name} agregado a tu ramo personalizado.`);
+                setShowNotification(true);
+                setTimeout(() => setShowNotification(false), 5000);
+            } catch (error) {
+                console.error('Failed to add item to custom product:', error);
+            }
         }
-
-
     };
 
     const handleRemoveItem = (item: CustomItem, index: number) => {
         setSelectedItems(currentItems => currentItems.filter((_, i) => i !== index));
-        setTotal(currentTotal => currentTotal - item.precio);
+        setTotal(currentTotal => currentTotal - item.price);
 
-        switch (item.tipo) {
-            case 'flor':
+        switch (item.category) {
+            case 'Flor':
                 setFlowerCount(flowerCount - 1);
                 break;
-            case 'papel':
+            case 'Papel':
                 setPaperCount(paperCount - 1);
                 break;
-            case 'follaje':
-                setFollajeCount(follajeCount - 1);
+            case 'Follaje':
+                setFoliageCount(foliageCount - 1);
                 break;
             default:
                 break;
@@ -102,124 +130,141 @@ const CustomProduct = () => {
 
     const isSelectable = (itemType: string) => {
         switch (itemType) {
-            case 'flor':
+            case 'Flor':
                 return flowerCount < 3;
-            case 'papel':
+            case 'Papel':
                 return paperCount < 2;
-            case 'follaje':
-                return follajeCount < 2;
+            case 'Follaje':
+                return foliageCount < 2;
             default:
                 return false;
         }
     };
 
-    const createCustomProduct = () => {
+    const handleChangeContextType = async (newContextType: string) => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            await axios.put(`http://localhost:8080/customProduct/${customProductId}/changeContextType?newContextType=${newContextType}`, {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            if (newContextType === 'SHOPPINGCART') {
+                const description = selectedItems.map(item => item.name).join(', ');
+                const newProduct = {
+                    id: selectedProducts.length > 0 ? Math.max(...selectedProducts.map(p => p.id)) + 1 : 1,
+                    productName: "Producto Personalizado",
+                    category: "Personalizado",
+                    price: total,
+                    image1: selectedItems[0]?.imageUrl,
+                    image2: "https://example.com/image2.jpg",
+                    image3: "https://example.com/image3.jpg",
+                    description: `Contiene: ${description}`,
+                    quantity: 1,
+                };
+                setSelectedProducts([...selectedProducts, newProduct]);
+            }
+
+            setNotificationMessage(`Producto agregado a ${newContextType === 'SHOPPINGCART' ? 'carrito' : 'lista de deseos'}`);
+            setShowNotification(true);
+            setTimeout(() => {
+                setShowNotification(false);
+                setCustomProductId(null);
+                window.location.reload();
+            }, 5000);
+
+        } catch (error) {
+            console.error(`Failed to change context type to ${newContextType}:`, error);
+        }
+    };
+
+    const createCustomProduct = (newContextType: string) => {
         if (!user.isLoggedIn) {
-            // Si no está logueado, redirige al login
             navigate('/login');
             return;
         }
 
-        if (flowerCount < 1 || paperCount < 1 || follajeCount < 1) {
-            alert("Debe seleccionar al menos una flor, un papel y un follaje.");
+        if (flowerCount < 1 || paperCount < 1 || foliageCount < 1) {
+            setModalMessage("Debe seleccionar al menos una flor, un papel y un follaje.");
+            setShowModal(true);
             return;
         }
 
-        const description = selectedItems.map(item => item.nombre).join(', ');
-        const newProduct = {
-            id: selectedProducts.length > 0 ? Math.max(...selectedProducts.map(p => p.id)) + 1 : 1,
-            productName: "Producto Personalizado",
-            category: "Personalizado",
-            price: total,
-            image1: selectedItems[0]?.imagen, // Toma la imagen del primer ítem
-            image2: "https://example.com/image2.jpg",
-            image3: "https://example.com/image3.jpg",
-            description: `Contiene: ${description}`,
-            quantity: 1,
-        };
-        setSelectedProducts([...selectedProducts, newProduct]);
-
-        setNotificationMessage("Producto agregado al carrito");
-        setShowNotification(true);
-
-        setTimeout(() => {
-            setShowNotification(false);
-        }, 5000);
+        handleChangeContextType(newContextType);
     };
-
 
     return (
         <div className='containerMain'>
             <div className="product-container">
                 <h2>Flores</h2>
                 <div className="customCards">
-                    {customItems.filter(item => item.tipo === 'flor').map(flower => (
-                        <div key={flower.id} className={`customCards__customCard ${isSelectable('flor') ? '' : 'disabled'}`}>
-                            <img src={flower.imagen} alt={flower.nombre} />
+                    {flowers.map(flower => (
+                        <div key={flower.id} className={`customCards__customCard ${isSelectable('Flor') ? '' : 'disabled'}`}>
+                            <img src={flower.imageUrl} alt={flower.name} />
                             <div className='data-custom-product'>
-                                <h3>{flower.nombre}</h3>
-                                <p>₡{flower.precio}</p>
+                                <h3>{flower.name}</h3>
+                                <p>₡{flower.price}</p>
                             </div>
-                            <button className='add-Button' onClick={() => handleSelectItem(flower)} disabled={!isSelectable('flor')}>Elegir</button>
+                            <button className='add-Button' onClick={() => handleSelectItem(flower)} disabled={!isSelectable('Flor')}>Elegir</button>
                         </div>
                     ))}
                 </div>
 
                 <h2>Papel de Envoltura</h2>
                 <div className="customCards">
-                    {customItems.filter(item => item.tipo === 'papel').map(paper => (
-                        <div key={paper.id} className={`customCards__customCard ${isSelectable('papel') ? '' : 'disabled'}`}>
-                            <img src={paper.imagen} alt={paper.nombre} />
+                    {wrappingPaper.map(paper => (
+                        <div key={paper.id} className={`customCards__customCard ${isSelectable('Papel') ? '' : 'disabled'}`}>
+                            <img src={paper.imageUrl} alt={paper.name} />
                             <div className='data-custom-product'>
-                                <h3>{paper.nombre}</h3>
-                                <p>₡{paper.precio}</p>
+                                <h3>{paper.name}</h3>
+                                <p>₡{paper.price}</p>
                             </div>
-
-                            <button className='add-Button' onClick={() => handleSelectItem(paper)}>Elegir</button>
+                            <button className='add-Button' onClick={() => handleSelectItem(paper)} disabled={!isSelectable('Papel')}>Elegir</button>
                         </div>
                     ))}
                 </div>
 
                 <h2>Follaje</h2>
                 <div className="customCards">
-                    {customItems.filter(item => item.tipo === 'follaje').map(follaje => (
-                        <div key={follaje.id} className={`customCards__customCard ${isSelectable('follaje') ? '' : 'disabled'}`}>
-                            <img src={follaje.imagen} alt={follaje.nombre} />
+                    {foliage.map(follaje => (
+                        <div key={follaje.id} className={`customCards__customCard ${isSelectable('Follaje') ? '' : 'disabled'}`}>
+                            <img src={follaje.imageUrl} alt={follaje.name} />
                             <div className='data-custom-product'>
-                                <h3>{follaje.nombre}</h3>
-                                <p>₡{follaje.precio}</p>
+                                <h3>{follaje.name}</h3>
+                                <p>₡{follaje.price}</p>
                             </div>
-
-                            <button className='add-Button' onClick={() => handleSelectItem(follaje)}>Elegir</button>
+                            <button className='add-Button' onClick={() => handleSelectItem(follaje)} disabled={!isSelectable('Follaje')}>Elegir</button>
                         </div>
                     ))}
                 </div>
             </div>
             <div className="selected-items">
-                <h2>Elementos seleccionados</h2>
+                <h3>Elementos seleccionados</h3>
                 {selectedItems.map((item, index) => (
                     <div className="item-card" key={index}>
                         <button className="item-card__remove" onClick={() => handleRemoveItem(item, index)}>x</button>
-                        <img className='item-card__img' src={item.imagen} alt={item.nombre} />
+                        <img className='item-card__img' src={item.imageUrl} alt={item.name} />
                         <div className="item-card__info">
-                            <p>{item.nombre} - ₡{item.precio}</p>
-                            <h6>{item.tipo}</h6>
+                            <p>{item.name} - ₡{item.price}</p>
+                            <h6>{item.type}</h6>
                         </div>
                     </div>
                 ))}
                 <h3>Total: ₡{total}</h3>
-                <button onClick={createCustomProduct}>Agregar al carrito</button>
+                <button onClick={() => createCustomProduct('SHOPPINGCART')}>Agregar al carrito</button>
+                <button onClick={() => createCustomProduct('WISHLIST')}>Agregar a lista de deseos</button>
                 <div className={`notificationMessage ${showNotification ? 'show' : ''}`}>
                     {notificationMessage}
                 </div>
             </div>
-
-
+            <div className='containerMain'>
+                <Modal isOpen={showModal} onClose={() => setShowModal(false)} message={modalMessage} />
+            </div>
         </div>
-
     );
 }
 
 export default CustomProduct;
-
-
