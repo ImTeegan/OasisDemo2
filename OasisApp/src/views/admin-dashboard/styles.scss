@@ -1,0 +1,46 @@
+// src/views/AdminDashboard/styles.scss
+.admin-dashboard1 {
+    display: flex;
+}
+
+.dashboard-content1 {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.dashboard-buttons1 {
+    display: flex;
+    gap: 20px;
+}
+
+.dashboard-button1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 150px;
+    height: 150px;
+    text-align: center;
+}
+
+.dashboard-button1:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-5px);
+}
+
+.button-icon1 {
+    font-size: 48px;
+    margin-bottom: 10px;
+    color: #2980b9;
+}

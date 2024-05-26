@@ -1,0 +1,96 @@
+// src/views/OrderDetails/styles.scss
+.dashboard-layout {
+    display: flex;
+}
+
+.dashboard-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.order-details {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.order-status {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    label {
+        margin-right: 10px;
+    }
+
+    select {
+        margin-right: 10px;
+        padding: 5px;
+    }
+
+    button {
+        padding: 5px 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #45a049;
+        }
+    }
+}
+
+.order-details p {
+    margin: 10px 0;
+    color: #555;
+
+    strong {
+        color: #333;
+    }
+}
+
+.order-products-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+
+    th,
+    td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f1f1f1;
+        color: #333;
+        font-weight: bold;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+}
+
+.notification {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    display: none;
+
+    &.show {
+        display: block;
+    }
+}

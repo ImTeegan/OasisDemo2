@@ -11,6 +11,12 @@ import Create from './views/create';
 import LogIn from './views/LogIn';
 import Cart from './views/cart';
 import Signup from './views/Signup';
+import AdminDashboard from './views/admin-dashboard';
+import ProductDashboard from './components/product-dashboard';
+import OrderDashboard from './components/order-dashboard';
+import CreateProduct from './components/create-product-from';
+import EditProduct from './views/product-to-edit';
+import OrderDetails from './components/order-details';
 
 
 
@@ -28,7 +34,12 @@ function App() {
         <Route path="/login" element={<LogIn />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/cart" element={<Cart />} />
-
+        <Route path='/admin-dashboard' element={<AdminDashboard />} />
+        <Route path="/admin-dashboard/product" element={<ProductDashboard />} />
+        <Route path="/admin-dashboard/order" element={<OrderDashboard />} />
+        <Route path='/create-product' element={<CreateProduct />} />
+        <Route path="/edit-product/:id" element={<EditProduct />} />
+        <Route path="/order-details/:id" element={<OrderDetails />} />
       </Routes>
     </>
   )
