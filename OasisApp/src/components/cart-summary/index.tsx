@@ -5,8 +5,61 @@ import { selectedProductsState } from '../../atoms/cartAtom';
 import axios from 'axios';
 
 const CartSummary = ({ onNext }: { onNext: () => void }) => {
-    const [selectedProducts] = useRecoilState(selectedProductsState);
+    const [selectedProducts, setSelectedProducts] = useRecoilState(selectedProductsState);
+    const [productsFromBackend, setProductsFromBackend] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
+
+    useEffect(() => {
+        const fetchCartProducts = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) return;
+
+                const [productResponse, customProductResponse] = await Promise.all([
+                    axios.get('http://localhost:8080/shoppingcart/products', {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }),
+                    axios.get('http://localhost:8080/customProduct/shoppingCart', {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }),
+                ]);
+
+                const products = productResponse.data.map(item => ({
+                    id: item.product.id,
+                    productName: item.product.name,
+                    description: item.product.description,
+                    category: item.product.category,
+                    type: 'Product',
+                    price: item.product.price,
+                    image1: item.product.imageUrl,
+                    quantity: item.quantity,
+                }));
+
+                const customProducts = customProductResponse.data.map(item => ({
+                    id: item.id,
+                    productName: "Producto Personalizado",
+                    description: item.items.map(i => i.product.name).join(', '),
+                    category: "Personalizado",
+                    type: "CustomProduct",
+                    price: item.totalCost,
+                    image1: item.items[0]?.product.imageUrl,
+                    quantity: item.quantity,
+                }));
+
+                const allProducts = [...products, ...customProducts];
+                setProductsFromBackend(allProducts);
+                setSelectedProducts(allProducts);
+            } catch (error) {
+                console.error('Failed to fetch cart products:', error);
+            }
+        };
+
+        fetchCartProducts();
+    }, [setSelectedProducts]);
 
     useEffect(() => {
         const fetchTotalPrice = async () => {
@@ -40,9 +93,9 @@ const CartSummary = ({ onNext }: { onNext: () => void }) => {
             <div className='cart-summary1'>
                 <div className='cart-summary__cards'>
                     <h2>Resumen</h2>
-                    {selectedProducts.map(product => (
+                    {productsFromBackend.map(product => (
                         <div className='cart-summary__cards__card' key={product.id}>
-                            <div>
+                            <div className='cart-summary__cards__card__image'>
                                 <img src={product.image1} alt={product.productName} />
                             </div>
                             <div>

@@ -46,6 +46,77 @@ const CustomProduct = () => {
         loadCustomProducts();
     }, []);
 
+    useEffect(() => {
+        const fetchSelectedItems = async () => {
+            if (!customProductId) return;
+
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) return;
+
+                const response = await axios.get(`http://localhost:8080/customProduct/${customProductId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                const customProduct = response.data;
+
+                const items = customProduct.items.map((item) => item.product);
+                setSelectedItems(items);
+                setTotal(customProduct.totalCost);
+                setFlowerCount(customProduct.flowerCount);
+                setPaperCount(customProduct.paperCount);
+                setFoliageCount(customProduct.foliageCount);
+            } catch (error) {
+                console.error('Failed to fetch custom product items:', error);
+            }
+        };
+
+        const fetchWishlistCustomProduct = async () => {
+            if (!customProductId) return;
+
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) return;
+
+                const response = await axios.get('http://localhost:8080/customProduct/wishList', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                const wishlistCustomProducts = response.data;
+                const customProduct = wishlistCustomProducts.find(cp => cp.id === customProductId);
+
+                if (customProduct) {
+                    const items = customProduct.items.map(item => item.product);
+
+                    const selectedItemsFromWishlist = items.map(item => {
+                        const categoryItem = [...flowers, ...wrappingPaper, ...foliage].find(
+                            p => p.id === item.id
+                        );
+                        if (categoryItem) {
+                            return categoryItem;
+                        }
+                        return item;
+                    });
+
+                    setSelectedItems(selectedItemsFromWishlist);
+                    setTotal(customProduct.totalCost);
+                    setFlowerCount(customProduct.flowerCount);
+                    setPaperCount(customProduct.paperCount);
+                    setFoliageCount(customProduct.foliageCount);
+                }
+            } catch (error) {
+                console.error('Failed to fetch wishlist custom products:', error);
+            }
+        };
+
+        fetchSelectedItems();
+        fetchWishlistCustomProduct();
+    }, [customProductId, flowers, wrappingPaper, foliage]);
+
     const Modal = ({ isOpen, onClose, message }) => {
         if (!isOpen) return null;
 
@@ -109,22 +180,35 @@ const CustomProduct = () => {
         }
     };
 
-    const handleRemoveItem = (item: CustomItem, index: number) => {
-        setSelectedItems(currentItems => currentItems.filter((_, i) => i !== index));
-        setTotal(currentTotal => currentTotal - item.price);
+    const handleRemoveItem = async (item: CustomItem, index: number) => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) return;
 
-        switch (item.category) {
-            case 'Flor':
-                setFlowerCount(flowerCount - 1);
-                break;
-            case 'Papel':
-                setPaperCount(paperCount - 1);
-                break;
-            case 'Follaje':
-                setFoliageCount(foliageCount - 1);
-                break;
-            default:
-                break;
+            await axios.delete(`http://localhost:8080/customProduct/${customProductId}/removeItem/${item.id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            setSelectedItems(currentItems => currentItems.filter((_, i) => i !== index));
+            setTotal(currentTotal => currentTotal - item.price);
+
+            switch (item.category) {
+                case 'Flor':
+                    setFlowerCount(flowerCount - 1);
+                    break;
+                case 'Papel':
+                    setPaperCount(paperCount - 1);
+                    break;
+                case 'Follaje':
+                    setFoliageCount(foliageCount - 1);
+                    break;
+                default:
+                    break;
+            }
+        } catch (error) {
+            console.error('Failed to remove item from custom product:', error);
         }
     };
 

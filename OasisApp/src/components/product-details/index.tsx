@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Product } from '../../types/types';
 import './styles.scss';
 import shoppingBag from '../../../public/icons/shoppingBag.png';
+import { FaHeart } from 'react-icons/fa';
 import { useRecoilState } from 'recoil';
 import { selectedProductsState } from '../../atoms/cartAtom';
 import { userState } from '../../atoms/sessionState';
@@ -15,6 +16,7 @@ const ProductDetailsComponent: React.FC = () => {
     const [quantity, setQuantity] = useState(1);
     const [showNotification, setShowNotification] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
+    const [wishlist, setWishlist] = useState(false); // Estado para wishlist
     const [user, setUser] = useRecoilState(userState);   // Estado de sesión
     const navigate = useNavigate();
 
@@ -23,6 +25,16 @@ const ProductDetailsComponent: React.FC = () => {
             try {
                 const response = await axios.get(`http://localhost:8080/products/${id}`);
                 setProduct(response.data);
+
+                const token = localStorage.getItem('token');
+                if (token) {
+                    const wishlistResponse = await axios.get(`http://localhost:8080/wishlist/isProductInWishlist/${id}`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+                    setWishlist(wishlistResponse.data);
+                }
             } catch (error) {
                 console.error('Failed to fetch product details:', error);
             }
@@ -42,7 +54,7 @@ const ProductDetailsComponent: React.FC = () => {
         if (!token) return;
 
         try {
-            const response = await axios.post('http://localhost:8080/shoppingcart/addProduct', {
+            await axios.post('http://localhost:8080/shoppingcart/addProduct', {
                 productId: product?.id,
                 quantity: quantity,
             }, {
@@ -80,6 +92,43 @@ const ProductDetailsComponent: React.FC = () => {
         }
     };
 
+    const toggleWishlist = async () => {
+        if (!user.isLoggedIn) {
+            navigate('/login');
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            if (wishlist) {
+                await axios.delete(`http://localhost:8080/wishlist/removeProduct/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                setNotificationMessage("Producto eliminado de la lista de deseos");
+            } else {
+                await axios.post(`http://localhost:8080/wishlist/addProduct/${id}`, {}, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                setNotificationMessage("Producto agregado a la lista de deseos");
+            }
+
+            setWishlist(!wishlist);
+            setShowNotification(true);
+
+            setTimeout(() => {
+                setShowNotification(false);
+            }, 5000);
+        } catch (error) {
+            console.error('Failed to toggle product in wishlist', error);
+        }
+    };
+
     const handleQuantityChange = (num: number) => {
         setQuantity(prev => Math.max(1, prev + num)); // Prevents quantity from going below 1
     };
@@ -102,7 +151,12 @@ const ProductDetailsComponent: React.FC = () => {
                     <input aria-label='cantidad' type="text" value={quantity} readOnly />
                     <button onClick={() => handleQuantityChange(1)}>+</button>
                 </div>
-                <button className='buttonAdd' onClick={addProductToCart}>Agregar al carrito<img src={shoppingBag} alt="Cart" /></button>
+                <div className="buttons">
+                    <button className='buttonAdd' onClick={addProductToCart}>Agregar al carrito<img src={shoppingBag} alt="Cart" /></button>
+                    <button className={`wishlist-button ${wishlist ? 'active' : ''}`} onClick={toggleWishlist}>
+                        <FaHeart />
+                    </button>
+                </div>
             </div>
             <div className={`notification ${showNotification ? 'show' : ''}`}>
                 {notificationMessage}

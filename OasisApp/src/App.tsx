@@ -17,6 +17,11 @@ import OrderDashboard from './components/order-dashboard';
 import CreateProduct from './components/create-product-from';
 import EditProduct from './views/product-to-edit';
 import OrderDetails from './components/order-details';
+import ProfileInfo from './components/profile-info';
+import ProfileOrders from './components/profile-orders';
+import ProfileWishlist from './components/profile-wishlist';
+import UserOrderDetails from './components/user-order-details';
+
 
 
 
@@ -40,6 +45,10 @@ function App() {
         <Route path='/create-product' element={<CreateProduct />} />
         <Route path="/edit-product/:id" element={<EditProduct />} />
         <Route path="/order-details/:id" element={<OrderDetails />} />
+        <Route path="/profile-info" element={<ProfileInfo />} />
+        <Route path="/profile-wishlist" element={<ProfileWishlist />} />
+        <Route path="/profile-orders" element={<ProfileOrders />} />
+        <Route path="/user-order-details/:id" element={<UserOrderDetails />} />
       </Routes>
     </>
   )

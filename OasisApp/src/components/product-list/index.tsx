@@ -6,6 +6,7 @@ import './styles.scss';
 import { useRecoilState } from 'recoil';
 import { selectedProductsState } from '../../atoms/cartAtom';
 import { userState } from '../../atoms/sessionState';
+import { FaHeart } from 'react-icons/fa';
 
 const ProductListComponent = () => {
     const [products, setProducts] = useState<Product[]>([]);
@@ -18,6 +19,7 @@ const ProductListComponent = () => {
     const [selectedProducts, setSelectedProducts] = useRecoilState(selectedProductsState);
     const [showNotification, setShowNotification] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
+    const [wishlist, setWishlist] = useState<number[]>([]);
     const [user, setUser] = useRecoilState(userState);
     const navigate = useNavigate();
     const location = useLocation();
@@ -34,8 +36,26 @@ const ProductListComponent = () => {
                         sort: sortPrice || undefined
                     }
                 });
-                setProducts(response.data.content);
+                const fetchedProducts = response.data.content;
+                setProducts(fetchedProducts);
                 setTotalPages(response.data.totalPages);
+
+                // Check if products are in wishlist
+                if (user.isLoggedIn) {
+                    const token = localStorage.getItem('token');
+                    if (token) {
+                        const wishlistStatusPromises = fetchedProducts.map(product =>
+                            axios.get(`http://localhost:8080/wishlist/isProductInWishlist/${product.id}`, {
+                                headers: { Authorization: `Bearer ${token}` }
+                            })
+                        );
+                        const wishlistStatuses = await Promise.all(wishlistStatusPromises);
+                        const wishlistProducts = wishlistStatuses
+                            .map((status, index) => status.data ? fetchedProducts[index].id : null)
+                            .filter(id => id !== null);
+                        setWishlist(wishlistProducts as number[]);
+                    }
+                }
             } catch (error) {
                 console.log('Failed to fetch products', error);
             }
@@ -124,6 +144,50 @@ const ProductListComponent = () => {
         }
     };
 
+    const toggleWishlist = async (productId: number) => {
+        if (!user.isLoggedIn) {
+            navigate('/login');
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            if (wishlist.includes(productId)) {
+                await axios.delete(`http://localhost:8080/wishlist/removeProduct/${productId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                setNotificationMessage("Producto eliminado de la lista de deseos");
+            } else {
+                await axios.post(`http://localhost:8080/wishlist/addProduct/${productId}`, {}, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                setNotificationMessage("Producto agregado a la lista de deseos");
+            }
+
+            setWishlist(prevWishlist => {
+                if (prevWishlist.includes(productId)) {
+                    return prevWishlist.filter(id => id !== productId);
+                } else {
+                    return [...prevWishlist, productId];
+                }
+            });
+
+            setShowNotification(true);
+
+            setTimeout(() => {
+                setShowNotification(false);
+            }, 5000);
+        } catch (error) {
+            console.error('Failed to toggle product in wishlist', error);
+        }
+    };
+
     return (
         <div>
             <div className='product-list-container'>
@@ -159,7 +223,12 @@ const ProductListComponent = () => {
                                 </div>
                                 <div className='cat-dat'>{product.category}</div>
                             </Link>
-                            <button className='addButton' onClick={() => addProductToCart(product)}>Agregar al carrito</button>
+                            <div className='card-buttons'>
+                                <button className='addButton' onClick={() => addProductToCart(product)}>Agregar al carrito</button>
+                                <button className='wishlistButton' onClick={() => toggleWishlist(product.id)}>
+                                    <FaHeart color={wishlist.includes(product.id) ? 'red' : 'grey'} />
+                                </button>
+                            </div>
                         </div>
                     ))}
                 </div>

@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './styles.scss';
 import logo from '../../../public/images/Logoalternativo.png';
 import shoppingBag from '../../../public/icons/shoppingBag.png';
-import userIcon from '../../../public/icons/userIcon.png';
-import logoutIcon from '../../../public/icons/logoutIcon.png';
-import trash from '../../../public/icons/trashIcon.png';
+import { FaUser, FaSignOutAlt, FaTrashAlt } from 'react-icons/fa';
 import { useRecoilState } from 'recoil';
 import { selectedProductsState } from '../../atoms/cartAtom';
 import { userState } from '../../atoms/sessionState';
@@ -51,6 +49,31 @@ const Navbar: React.FC = () => {
             document.removeEventListener('mousedown', handleOutsideClick);
         };
     }, []);
+
+    useEffect(() => {
+        const loadUser = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                const response = await axios.get('http://localhost:8080/users/me', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                setUser({
+                    isLoggedIn: true,
+                    name: response.data.name,
+                    role: response.data.role,
+                });
+            } catch (error) {
+                console.error('Failed to load user data:', error);
+            }
+        };
+
+        loadUser();
+    }, [setUser]);
 
     useEffect(() => {
         const loadCartProducts = async () => {
@@ -123,6 +146,10 @@ const Navbar: React.FC = () => {
         navigate('/login');
     };
 
+    const handleProfile = () => {
+        navigate('/profile-info');
+    };
+
     const deleteProduct = async (productId: number, productType: string) => {
         const token = localStorage.getItem('token');
         if (!token) return;
@@ -182,7 +209,8 @@ const Navbar: React.FC = () => {
                             <div className="user-menu" onClick={toggleDropdown}>
                                 {user.name} ▼
                                 <div className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`}>
-                                    <div className='element-dm'><button className='plain-button' onClick={handleLogout}><img className='userImg' src={logoutIcon} alt="" />Cerrar sesión</button></div>
+                                    <div className='element-dm'><button className='plain-button' onClick={handleProfile}><FaUser className='icon' />Perfil</button></div>
+                                    <div className='element-dm'><button className='plain-button' onClick={handleLogout}><FaSignOutAlt className='icon' />Cerrar sesión</button></div>
                                 </div>
                             </div>
                         ) : (
@@ -209,7 +237,7 @@ const Navbar: React.FC = () => {
                                                 <p>Cantidad: {product.quantity}</p>
                                                 <span>₡{product.price}</span>
                                             </div>
-                                            <button aria-label='delete' onClick={() => deleteProduct(product.id, product.type)}> <img aria-label='delete' className='imgTrash' src={trash}></img> </button>
+                                            <button aria-label='delete' onClick={() => deleteProduct(product.id, product.type)}> <FaTrashAlt aria-label='delete' className='imgTrash' /> </button>
                                         </div>
                                     </div>
                                 ))
@@ -235,7 +263,7 @@ const Navbar: React.FC = () => {
                                 <div className="user-menu" onClick={toggleDropdown}>
                                     {user.name} ▼
                                     <div className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`}>
-                                        <div className='element-dm'><button className='plain-button' onClick={handleLogout}><img className='userImg' src={logoutIcon} alt="" />Cerrar sesión</button></div>
+                                        <div className='element-dm'><button className='plain-button' onClick={handleLogout}><FaSignOutAlt className='icon' />Cerrar sesión</button></div>
                                     </div>
                                 </div>
                             ) : (

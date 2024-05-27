@@ -1,4 +1,3 @@
-// src/views/OrderDetails/OrderDetails.tsx
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -13,6 +12,7 @@ const OrderDetails: React.FC = () => {
     const navigate = useNavigate();
     const [order, setOrder] = useState<any>(null);
     const [userDetails, setUserDetails] = useState<any>(null);
+    const [customProducts, setCustomProducts] = useState<any[]>([]);
     const [status, setStatus] = useState('');
     const [error, setError] = useState('');
     const [showNotification, setShowNotification] = useState(false);
@@ -37,6 +37,13 @@ const OrderDetails: React.FC = () => {
                     },
                 });
                 setUserDetails(userResponse.data);
+
+                const customProductsResponse = await axios.get(`http://localhost:8080/customProduct/order/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                setCustomProducts(customProductsResponse.data);
             } catch (err) {
                 console.error('Error fetching order details:', err);
                 setError('Error fetching order details.');
@@ -102,16 +109,37 @@ const OrderDetails: React.FC = () => {
                         <thead>
                             <tr>
                                 <th>Producto</th>
-                                <th>Precio</th>
                                 <th>Cantidad</th>
+                                <th>Precio</th>
                             </tr>
                         </thead>
                         <tbody>
                             {order.productDetails.map((product, index) => (
                                 <tr key={product.id}>
                                     <td>{product.name}</td>
-                                    <td>₡{product.price.toLocaleString()}</td>
                                     <td>{order.orderProducts[index].quantity}</td>
+                                    <td>₡{product.price.toLocaleString()}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    <h2>Productos Personalizados</h2>
+                    <table className="custom-products-table">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Contiene</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {customProducts.map(customProduct => (
+                                <tr key={customProduct.id}>
+                                    <td>Producto Personalizado</td>
+                                    <td>{customProduct.items.map(item => item.product.name).join(', ')}</td>
+                                    <td>{customProduct.quantity}</td>
+                                    <td>₡{customProduct.totalCost.toLocaleString()}</td>
                                 </tr>
                             ))}
                         </tbody>

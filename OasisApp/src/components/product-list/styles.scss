@@ -19,7 +19,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     margin: 20px;
-    width: auto; // Flexible width
+    width: auto;
 
     input[type="text"] {
         margin-bottom: 15px;
@@ -104,13 +104,11 @@
             flex-direction: column;
 
             label {
-                flex-direction: row; // Asegura que el checkbox esté al lado del texto
+                flex-direction: row;
             }
         }
     }
 }
-
-
 
 .cards {
     flex: 3;
@@ -136,12 +134,9 @@
 
         img {
             width: 100%;
-            height: 200px; // Reduced for better fit
+            height: 200px;
             object-fit: cover;
         }
-
-
-
 
         .data-product {
             display: flex;
@@ -150,7 +145,6 @@
             padding: 0 1rem;
 
             p {
-                //padding: 0 10px;
                 color: black;
                 font-size: 1.3rem;
                 font-weight: 400;
@@ -158,13 +152,10 @@
             }
 
             h2 {
-                //margin-top: 10px;
-                //padding: 0 10px;
                 color: black;
                 font-size: 1.3rem;
                 font-weight: 400;
             }
-
         }
 
         .cat-dat {
@@ -175,33 +166,34 @@
             margin-bottom: 1rem;
         }
 
-
-
-        .addButton {
-            margin: auto 10px 10px;
+        .card-buttons {
+            display: flex;
+            justify-content: space-between;
             padding: 10px;
-            background-color: white;
-            color: $color-paleta2-2;
-            border: solid 1.5px $color-paleta2-2;
-            border-radius: 4px;
-            cursor: pointer;
 
-            &:hover {
-                background-color: darken($color-paleta2-2, 10%);
-                color: $color-paleta2-4;
+            .addButton {
+                margin: auto 10px 10px;
+                padding: 10px;
+                background-color: white;
+                color: $color-paleta2-2;
+                border: solid 1.5px $color-paleta2-2;
+                border-radius: 4px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: darken($color-paleta2-2, 10%);
+                    color: $color-paleta2-4;
+                }
+            }
+
+            .wishlistButton {
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 20px;
             }
         }
     }
-}
-
-
-
-
-
-
-.addButton {
-    cursor: pointer;
-    font-size: 20px;
 }
 
 .notification {
@@ -220,11 +212,7 @@
     visibility: hidden;
     font-size: 17px;
     opacity: 0;
-    // transition: opacity 0.5s, visibility 0.5s;
-
-
-
-
+    transition: opacity 0.5s, visibility 0.5s;
 }
 
 .notification.show {

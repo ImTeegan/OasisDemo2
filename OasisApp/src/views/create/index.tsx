@@ -1,5 +1,4 @@
-// src/views/create/index.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import BannerComponent from '../../components/heroBanner';
 import CustomProduct from '../../components/custom-product';
@@ -8,24 +7,33 @@ import axios from 'axios';
 import './styles.scss';
 
 const Create: React.FC = () => {
-    const [showModal, setShowModal] = useState(true);
+    const [showModal, setShowModal] = useState(false);
     const [customProductId, setCustomProductId] = useRecoilState(customProductIdState);
+
+    useEffect(() => {
+        const createCustomProduct = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                if (!customProductId) {
+                    const response = await axios.post('http://localhost:8080/customProduct/create', {}, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+                    setCustomProductId(response.data.id);
+                }
+            } catch (error) {
+                console.error('Failed to create custom product:', error);
+            }
+        };
+
+        createCustomProduct();
+    }, [customProductId, setCustomProductId]);
 
     const handleCreateClick = async () => {
         setShowModal(false);
-        const token = localStorage.getItem('token');
-        if (!token) return;
-
-        try {
-            const response = await axios.post('http://localhost:8080/customProduct/create', {}, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            setCustomProductId(response.data.id);
-        } catch (error) {
-            console.error('Failed to create custom product:', error);
-        }
     };
 
     return (

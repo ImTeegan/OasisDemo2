@@ -41,11 +41,8 @@
         .productDetails__containerdetails__price {
             font-size: 1.5rem;
             font-weight: bold;
-            //font-weight: 300;
             color: red;
-
             border-top: solid 1px #ccc;
-
         }
 
         .productDetails__containerdetails__cat {
@@ -54,7 +51,6 @@
             font-style: italic;
             color: black;
             padding-top: 2rem;
-
         }
 
         .productDetails__containerdetails__des {
@@ -62,7 +58,6 @@
             font-weight: 350;
             font-size: 1.1rem;
             margin-bottom: 2rem;
-
         }
 
         div {
@@ -93,28 +88,60 @@
             }
         }
 
-        .buttonAdd {
-            //padding-top: 2rem;
-            //align-self: center;
-            padding: 10px 15px;
-            margin-top: 1.6rem;
-            background-color: $color-paleta2-4;
-            color: $color-paleta2-2;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        .buttons {
             display: flex;
             align-items: center;
-            gap: 5px;
-            width: 160px;
+            gap: 10px;
 
-            img {
-                height: 20px;
+            .buttonAdd {
+                padding: 10px 15px;
+                margin-top: 1.6rem;
+                background-color: $color-paleta2-4;
+                color: $color-paleta2-2;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                width: 160px;
+
+                img {
+                    height: 20px;
+                }
+
+                &:hover {
+                    transition: all ease-in 0.1s;
+                    scale: 1.1;
+                }
             }
 
-            &:hover {
-                transition: all ease-in 0.1s;
-                scale: 1.1;
+            .wishlist-button {
+                padding: 10px 15px;
+                margin-top: 1.6rem;
+                background-color: $color-paleta2-4;
+                color: $color-paleta2-2;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                width: 50px;
+                justify-content: center;
+
+                svg {
+                    font-size: 20px;
+                }
+
+                &.active {
+                    color: red;
+                }
+
+                &:hover {
+                    transition: all ease-in 0.1s;
+                    scale: 1.1;
+                }
             }
         }
     }
@@ -148,7 +175,6 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     visibility: hidden;
     font-size: 17px;
-    /* oculta inicialmente */
     opacity: 0;
     transition: opacity 0.5s, visibility 0.5s;
 }
