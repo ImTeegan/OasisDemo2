@@ -1,11 +1,32 @@
 @import '../../styles/global.scss';
 
+.profile-wishlist-container {
+    @media (max-width: 700px) {
+        margin-top: 4.3rem;
+    }
+}
+
+.centering {
+    align-self: center;
+    margin-bottom: 2rem;
+}
+
 .profile-wishlist {
     display: flex;
+    margin-top: 4rem;
+
+    @media (max-width: 700px) {
+        margin-top: 0.3rem;
+    }
+
+
 
     .wishlist-content {
         flex: 1;
         padding: 2rem 4rem;
+
+
+
 
         h1 {
             font-size: 2rem;
@@ -35,7 +56,7 @@
 
         .wishlist-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
             gap: 1rem;
 
             .cards__card {
@@ -55,19 +76,19 @@
 
                 img {
                     width: 100%;
-                    height: 200px;
+                    height: 180px;
                     object-fit: cover;
                 }
 
                 h2 {
                     font-size: 1.3rem;
                     font-weight: 500;
-                    padding: 1rem;
+                    padding: 0 0.5rem;
                 }
 
                 p {
                     font-size: 1.1rem;
-                    padding: 0 1rem;
+                    padding: 0 0.5rem;
                 }
 
                 .quantity-control {
@@ -75,7 +96,7 @@
                     justify-content: center;
                     align-items: center;
                     gap: 10px;
-                    margin: 10px 0;
+                    margin: 0px 0;
 
                     button {
                         background-color: $color-paleta2-2;
@@ -109,6 +130,7 @@
 
                     .view-button {
                         padding: 10px;
+                        font-size: 14px;
                         background-color: white;
                         color: $color-paleta2-2;
                         border: solid 1.5px $color-paleta2-2;
@@ -132,4 +154,10 @@
             }
         }
     }
+}
+
+.separing {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }

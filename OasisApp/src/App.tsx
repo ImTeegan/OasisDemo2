@@ -21,6 +21,7 @@ import ProfileInfo from './components/profile-info';
 import ProfileOrders from './components/profile-orders';
 import ProfileWishlist from './components/profile-wishlist';
 import UserOrderDetails from './components/user-order-details';
+import Forbidden from './components/forbidden';
 
 
 
@@ -49,6 +50,7 @@ function App() {
         <Route path="/profile-wishlist" element={<ProfileWishlist />} />
         <Route path="/profile-orders" element={<ProfileOrders />} />
         <Route path="/user-order-details/:id" element={<UserOrderDetails />} />
+        <Route path="/forbidden" element={<Forbidden />} />
       </Routes>
     </>
   )

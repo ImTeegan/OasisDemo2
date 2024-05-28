@@ -10,10 +10,10 @@ const Sidebar: React.FC = () => {
         <div className="sidebar">
             <ul>
                 <li className={location.pathname === '/admin-dashboard/product' ? 'active' : ''}>
-                    <Link to="/admin-dashboard/product">Product Dashboard</Link>
+                    <Link to="/admin-dashboard/product">Administrar Productos</Link>
                 </li>
                 <li className={location.pathname === '/admin-dashboard/order' ? 'active' : ''}>
-                    <Link to="/admin-dashboard/order">Order Dashboard</Link>
+                    <Link to="/admin-dashboard/order">Administrar Órdenes</Link>
                 </li>
             </ul>
         </div>

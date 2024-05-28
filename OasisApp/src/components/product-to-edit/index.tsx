@@ -1,4 +1,3 @@
-// src/views/EditProduct/EditProduct.tsx
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -68,7 +67,9 @@ const ProductToEdit: React.FC = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            alert('Producto actualizado exitosamente');
+            setNotificationMessage("Producto Editado exitosamente");
+            setShowNotification(true);
+            setTimeout(() => setShowNotification(false), 3000);
         } catch (err) {
             console.error('Error al actualizar el producto:', err);
             setError('Error al actualizar el producto.');
@@ -169,13 +170,13 @@ const ProductToEdit: React.FC = () => {
                     <div className="modal-overlay">
                         <div className="modal-content">
                             <p>¿Estás seguro de eliminar el producto "{name}"?</p>
-                            <button onClick={() => setShowModal(false)}>Atrás</button>
-                            <button onClick={handleDeleteProduct}>Sí, eliminar</button>
+                            <button className='deleteno' onClick={() => setShowModal(false)}>Atrás</button>
+                            <button className='deleteno' onClick={handleDeleteProduct}>Sí, eliminar</button>
                         </div>
                     </div>
                 )}
                 {showNotification && (
-                    <div className="notification">
+                    <div className={`notification ${showNotification ? 'show' : ''}`}>
                         {notificationMessage}
                     </div>
                 )}

@@ -16,8 +16,10 @@ const OrderDetails: React.FC = () => {
     const [status, setStatus] = useState('');
     const [error, setError] = useState('');
     const [showNotification, setShowNotification] = useState(false);
+    //const navigate = useNavigate();
 
     useEffect(() => {
+
         const fetchOrderDetails = async () => {
             try {
                 const token = localStorage.getItem('token');

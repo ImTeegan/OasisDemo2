@@ -1,27 +1,60 @@
 // src/components/Sidebar/Sidebar.scss
+@import '../../styles/global.scss';
+
 .sidebar {
-    margin-top: 5rem;
-    width: 200px;
+    margin-top: 5.3rem;
+    width: 250px;
     height: 100vh;
-    background-color: #2c3e50;
-    color: #ecf0f1;
+    background-color: #ffffff;
+    color: $color-paleta2-4;
     display: flex;
     flex-direction: column;
     padding: 20px;
+    border-right: 2px solid #8b8b8b;
+
+    @media (max-width: 700px) {
+        width: 100%;
+        height: auto;
+        padding: 10px;
+        border-right: none;
+        border-bottom: 2px solid #8b8b8b;
+        flex-direction: row;
+        justify-content: space-around;
+    }
 }
 
 .sidebar ul {
     list-style: none;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+
+    @media (max-width: 700px) {
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-around;
+    }
 }
 
 .sidebar ul li {
-    margin: 10px 0;
+    margin: 2rem 0;
+    border-bottom: solid 2px #8b8b8b;
+    margin-left: 3rem;
+
+    @media (max-width: 700px) {
+        margin: 0;
+        border-bottom: none;
+    }
 }
 
 .sidebar ul li a {
-    color: #ecf0f1;
+    color: $color-paleta2-2;
     text-decoration: none;
+
+    @media (max-width: 700px) {
+        padding: 10px;
+        text-align: center;
+    }
 }
 
 .sidebar ul li.active a {

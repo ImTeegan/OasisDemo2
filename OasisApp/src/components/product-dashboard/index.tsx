@@ -11,25 +11,24 @@ const ProductDashboard: React.FC = () => {
     const user = useRecoilValue(userState);
     const [products, setProducts] = useState([]);
     const [type, setType] = useState('Product');
-    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
         if (user.role !== 'SUPER_ADMIN') {
-            setError('Acceso denegado. No tiene los permisos necesarios para acceder a esta página.');
+            navigate('/forbidden'); // Redirigir a la página de error 403 Forbidden
         } else {
             fetchProducts();
         }
-    }, [type]);
+    }, [type, user.role, navigate]);
 
     const fetchProducts = async () => {
         try {
             const endpoint = type === 'Product'
-                ? 'http://localhost:8080/products/getAllTypeProducts'
+                ? 'http://localhost:8080/products'
                 : 'http://localhost:8080/products/items';
 
             const response = await axios.get(endpoint);
-            const data = type === 'Product' ? response.data.content : response.data;
+            const data = type === 'Product' ? response.data : response.data;
             setProducts(data);
         } catch (err) {
             console.error('Error al obtener los productos:', err);
@@ -44,25 +43,21 @@ const ProductDashboard: React.FC = () => {
         navigate(`/edit-product/${productId}`);
     };
 
-    if (error) {
-        return <div>{error}</div>;
-    }
-
     return (
         <div className="dashboard-layout">
             <Sidebar />
             <div className="dashboard-content">
-                <h1>Product Dashboard</h1>
+                <h1>Administrar Productos</h1>
                 <div className='upper-section'>
                     <div className="filter-container">
                         <label htmlFor="type">Tipo de Producto:</label>
                         <select id="type" value={type} onChange={handleTypeChange}>
-                            <option value="Product">Productos</option>
-                            <option value="Item">Items para Producto Personalizado</option>
+                            <option className='option-style' value="Product">Productos</option>
+                            <option className='option-style' value="Item">Items para Producto Personalizado</option>
                         </select>
                     </div>
                     <div>
-                        <Link to='/create-product'> Crear Producto</Link>
+                        <Link className='link-button' to='/create-product'> Crear Producto</Link>
                     </div>
                 </div>
 

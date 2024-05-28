@@ -5,3 +5,9 @@ export const customProductIdState = atom<number | null>({
     key: 'customProductIdState',
     default: null,
 });
+
+
+export const editCustomProduct = atom<boolean | false>({
+    key: 'editCustomProduct',
+    default: false
+})

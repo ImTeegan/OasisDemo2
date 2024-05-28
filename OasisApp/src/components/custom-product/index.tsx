@@ -5,7 +5,7 @@ import './styles.scss';
 import { useRecoilState } from 'recoil';
 import { selectedProductsState } from '../../atoms/cartAtom';
 import { userState } from '../../atoms/sessionState';
-import { customProductIdState } from '../../atoms/customProductAtom';
+import { customProductIdState, editCustomProduct } from '../../atoms/customProductAtom';
 import axios from 'axios';
 
 const CustomProduct = () => {
@@ -24,9 +24,12 @@ const CustomProduct = () => {
     const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const [customProductId, setCustomProductId] = useRecoilState(customProductIdState);
+    const [editCustom, setEditCustomProduct] = useRecoilState(editCustomProduct);
+    const [customProductName, setCustomProductName] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
+        setEditCustomProduct(false);
         const loadCustomProducts = async () => {
             try {
                 const [fetchedFlowers, fetchedWrappingPaper, fetchedFoliage] = await Promise.all([
@@ -107,6 +110,7 @@ const CustomProduct = () => {
                     setFlowerCount(customProduct.flowerCount);
                     setPaperCount(customProduct.paperCount);
                     setFoliageCount(customProduct.foliageCount);
+                    setEditCustomProduct(false);
                 }
             } catch (error) {
                 console.error('Failed to fetch wishlist custom products:', error);
@@ -229,8 +233,9 @@ const CustomProduct = () => {
         try {
             const token = localStorage.getItem('token');
             if (!token) return;
+            console.log(customProductId, newContextType, customProductName);
 
-            await axios.put(`http://localhost:8080/customProduct/${customProductId}/changeContextType?newContextType=${newContextType}`, {}, {
+            await axios.put(`http://localhost:8080/customProduct/${customProductId}/changeContextType?newContextType=${newContextType}&name=${customProductName}`, {}, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -271,8 +276,8 @@ const CustomProduct = () => {
             return;
         }
 
-        if (flowerCount < 1 || paperCount < 1 || foliageCount < 1) {
-            setModalMessage("Debe seleccionar al menos una flor, un papel y un follaje.");
+        if (flowerCount < 1 || paperCount < 1 || foliageCount < 1 || !customProductName) {
+            setModalMessage("Debe seleccionar al menos una flor, un papel y un follaje, y proporcionar un nombre para el producto.");
             setShowModal(true);
             return;
         }
@@ -337,9 +342,16 @@ const CustomProduct = () => {
                         </div>
                     </div>
                 ))}
+                <input
+                    type="text"
+                    placeholder="Nombre del producto personalizado"
+                    value={customProductName}
+                    onChange={(e) => setCustomProductName(e.target.value)}
+                    className="custom-input"
+                />
                 <h3>Total: ₡{total}</h3>
-                <button onClick={() => createCustomProduct('SHOPPINGCART')}>Agregar al carrito</button>
-                <button onClick={() => createCustomProduct('WISHLIST')}>Agregar a lista de deseos</button>
+                <button onClick={() => createCustomProduct('SHOPPINGCART')} disabled={!customProductName}>Agregar al carrito</button>
+                <button onClick={() => createCustomProduct('WISHLIST')} disabled={!customProductName}>Agregar a lista de deseos</button>
                 <div className={`notificationMessage ${showNotification ? 'show' : ''}`}>
                     {notificationMessage}
                 </div>

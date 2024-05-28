@@ -12,11 +12,12 @@
 
     .login-container {
         background: $color-paleta2-4;
-        padding: 2rem;
+        padding: 1rem 2rem;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         width: 100%;
         max-width: 400px;
+        max-height: 90%;
 
         h1 {
             text-align: center;
@@ -30,7 +31,7 @@
             padding-right: 25px;
 
             label {
-                margin-bottom: 1rem;
+                margin-bottom: 0.3rem;
                 color: $color-paleta2-2;
 
                 input {

@@ -1,4 +1,3 @@
-// src/components/ProfileWishlist/ProfileWishlist.tsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
@@ -7,6 +6,7 @@ import ProfileSidebar from '../profile-sidebar';
 import { useRecoilState } from 'recoil';
 import { selectedProductsState } from '../../atoms/cartAtom';
 import { customProductIdState } from '../../atoms/customProductAtom';
+import { editCustomProduct } from '../../atoms/customProductAtom';
 import './styles.scss';
 
 const ProfileWishlist: React.FC = () => {
@@ -17,6 +17,8 @@ const ProfileWishlist: React.FC = () => {
     const [error, setError] = useState('');
     const [selectedProducts, setSelectedProducts] = useRecoilState(selectedProductsState);
     const [, setCustomProductId] = useRecoilState(customProductIdState);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 700);
+    const [, setEditCustomproduct] = useRecoilState(editCustomProduct);
 
     useEffect(() => {
         const fetchWishlistProducts = async () => {
@@ -40,6 +42,16 @@ const ProfileWishlist: React.FC = () => {
         };
 
         fetchWishlistProducts();
+    }, []);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 700);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     const increaseQuantity = async (id: number) => {
@@ -184,7 +196,7 @@ const ProfileWishlist: React.FC = () => {
 
             const customCartProducts = customCartProductsResponse.data.map(item => ({
                 id: item.id,
-                productName: "Producto Personalizado",
+                productName: item.name,
                 description: `Flores: ${item.flowerCount}, Papeles: ${item.paperCount}, Follajes: ${item.foliageCount}`,
                 category: "Personalizado",
                 type: "CustomProduct",
@@ -202,58 +214,74 @@ const ProfileWishlist: React.FC = () => {
 
     const handleEditCustomProduct = (id: number) => {
         setCustomProductId(id);
+        setEditCustomproduct(true);
         navigate('/create');
     };
 
     return (
-        <div className="profile-wishlist">
-            <ProfileSidebar />
-            <div className="wishlist-content">
-                <h1>Mi Wishlist</h1>
-                {error && <p className="error-message">{error}</p>}
-                <button className="move-to-cart-button" onClick={moveToCart}>Agregar todo al carrito</button>
-                <div className="wishlist-cards">
-                    {wishlistProducts.map(product => {
-                        const productDetail = productDetails.find(p => p.id === product.productId);
-                        if (!productDetail) return null;
+        <div className="profile-wishlist-container">
+            {isMobile && <ProfileSidebar />}
+            <div className="profile-wishlist">
+                {!isMobile && <ProfileSidebar />}
+                <div className="wishlist-content">
+                    <h1>Mi Wishlist</h1>
+                    {error && <p className="error-message">{error}</p>}
+                    <button className="move-to-cart-button" onClick={moveToCart}>Agregar todo al carrito</button>
+                    <div className="wishlist-cards">
+                        {wishlistProducts.map(product => {
+                            const productDetail = productDetails.find(p => p.id === product.productId);
+                            if (!productDetail) return null;
 
-                        return (
-                            <div className="cards__card" key={product.productId}>
-                                <img src={productDetail.imageUrl} alt={productDetail.name} />
-                                <h2>{productDetail.name}</h2>
-                                <p>₡{productDetail.price}</p>
-                                <div className="quantity-control">
-                                    <button onClick={() => decreaseQuantity(product.id)}>-</button>
-                                    <span>{product.quantity}</span>
-                                    <button onClick={() => increaseQuantity(product.id)}>+</button>
+                            return (
+                                <div className="cards__card" key={product.productId}>
+                                    <img src={productDetail.imageUrl} alt={productDetail.name} />
+                                    <div className='separing'>
+                                        <h2>{productDetail.name}</h2>
+                                        <p>₡{productDetail.price}</p>
+                                    </div>
+
+                                    <div className='centering'>
+                                        <div className="cart-summary__cards__card__quantity-control">
+                                            <button onClick={() => decreaseQuantity(product.id)}>-</button>
+                                            <span>{product.quantity}</span>
+                                            <button onClick={() => increaseQuantity(product.id)}>+</button>
+                                        </div>
+                                    </div>
+
+                                    <div className="card-buttons">
+                                        <Link to={`/product-details/${product.productId}`} className="view-button">Ver Producto</Link>
+                                        <button className="wishlistButton" onClick={() => removeProduct(product.productId)}>
+                                            <FaHeart color="red" />
+                                        </button>
+                                    </div>
                                 </div>
+                            );
+                        })}
+                        {customWishlistProducts.map(customProduct => (
+                            <div className="cards__card" key={customProduct.id}>
+                                <img src={customProduct.items[0].product.imageUrl} alt="Producto Personalizado" />
+                                <div className='separing'>
+                                    <h2>{customProduct.name}</h2>
+                                    <p>₡{customProduct.totalCost}</p>
+                                </div>
+
+                                <div className='centering'>
+                                    <div className="cart-summary__cards__card__quantity-control">
+                                        <button onClick={() => decreaseCustomProductQuantity(customProduct.id)}>-</button>
+                                        <span>{customProduct.quantity}</span>
+                                        <button onClick={() => increaseCustomProductQuantity(customProduct.id)}>+</button>
+                                    </div>
+                                </div>
+
                                 <div className="card-buttons">
-                                    <Link to={`/product-details/${product.productId}`} className="view-button">Ver Producto</Link>
-                                    <button className="wishlistButton" onClick={() => removeProduct(product.productId)}>
+                                    <button className="view-button" onClick={() => handleEditCustomProduct(customProduct.id)}>Ver Producto</button>
+                                    <button className="wishlistButton" onClick={() => removeCustomProduct(customProduct.id)}>
                                         <FaHeart color="red" />
                                     </button>
                                 </div>
                             </div>
-                        );
-                    })}
-                    {customWishlistProducts.map(customProduct => (
-                        <div className="cards__card" key={customProduct.id}>
-                            <img src={customProduct.items[0].product.imageUrl} alt="Producto Personalizado" />
-                            <h2>Producto Personalizado</h2>
-                            <p>₡{customProduct.totalCost}</p>
-                            <div className="quantity-control">
-                                <button onClick={() => decreaseCustomProductQuantity(customProduct.id)}>-</button>
-                                <span>{customProduct.quantity}</span>
-                                <button onClick={() => increaseCustomProductQuantity(customProduct.id)}>+</button>
-                            </div>
-                            <div className="card-buttons">
-                                <button className="view-button" onClick={() => handleEditCustomProduct(customProduct.id)}>Editar</button>
-                                <button className="wishlistButton" onClick={() => removeCustomProduct(customProduct.id)}>
-                                    <FaHeart color="red" />
-                                </button>
-                            </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

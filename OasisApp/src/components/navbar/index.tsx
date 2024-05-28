@@ -107,7 +107,7 @@ const Navbar: React.FC = () => {
 
                 const customProducts = customProductsResponse.data.map(item => ({
                     id: item.id,
-                    productName: "Producto Personalizado",
+                    productName: item.name,
                     description: `Flores: ${item.flowerCount}, Papeles: ${item.paperCount}, Follajes: ${item.foliageCount}`,
                     category: "Personalizado",
                     type: "CustomProduct",

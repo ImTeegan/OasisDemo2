@@ -1,6 +1,11 @@
-// src/views/EditProduct/styles.scss
+@import '../../styles/global.scss';
+
 .edit-product {
     padding: 20px;
+}
+
+.edit-product-form {
+    margin-right: 5rem;
 }
 
 .edit-product h1 {
@@ -84,4 +89,33 @@ button[type="submit"]:hover {
     padding: 20px;
     border-radius: 4px;
     text-align: center;
+
+    .deleteno {
+        padding: 10px 20px;
+        background-color: $color-paleta2-2;
+        color: #fff;
+        border: none;
+        margin-left: 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        justify-content: space-between;
+    }
+}
+
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 1000;
+    transition: opacity 0.3s ease;
 }

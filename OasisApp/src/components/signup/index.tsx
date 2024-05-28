@@ -8,13 +8,14 @@ const SignupComponent = () => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleSignup = async (event) => {
         event.preventDefault();
 
-        if (!name || !lastName || !email || !password) {
+        if (!name || !lastName || !email || !password || !confirmPassword) {
             setError('Todos los campos deben ser llenados.');
             return;
         }
@@ -28,6 +29,11 @@ const SignupComponent = () => {
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
         if (!passwordRegex.test(password)) {
             setError('La contraseña debe tener al menos 8 caracteres, incluyendo una minúscula, una mayúscula y un número.');
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            setError('Las contraseñas no coinciden.');
             return;
         }
 
@@ -53,6 +59,7 @@ const SignupComponent = () => {
         <div className="login-background">
             <div className="login-container">
                 <h1>Registrarse</h1>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
                 <form onSubmit={handleSignup}>
                     <label>
                         Nombre:
@@ -90,8 +97,17 @@ const SignupComponent = () => {
                             required
                         />
                     </label>
+                    <label>
+                        Confirmar Contraseña:
+                        <input
+                            type="password"
+                            value={confirmPassword}
+                            onChange={e => setConfirmPassword(e.target.value)}
+                            required
+                        />
+                    </label>
                     <button type="submit">Registrarse</button>
-                    {error && <p style={{ color: 'red' }}>{error}</p>}
+
                 </form>
                 <p className='linktolos'>Ya tienes una cuenta? <Link to="/login">Inicia Sesión</Link></p>
             </div>

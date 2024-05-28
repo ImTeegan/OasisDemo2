@@ -41,7 +41,7 @@ const CartSummary = ({ onNext }: { onNext: () => void }) => {
 
                 const customProducts = customProductResponse.data.map(item => ({
                     id: item.id,
-                    productName: "Producto Personalizado",
+                    productName: item.name,
                     description: item.items.map(i => i.product.name).join(', '),
                     category: "Personalizado",
                     type: "CustomProduct",

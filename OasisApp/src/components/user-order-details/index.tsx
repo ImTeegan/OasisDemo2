@@ -23,7 +23,7 @@ const UserOrderDetails: React.FC = () => {
                 const token = localStorage.getItem('token');
                 if (!token) return;
 
-                const orderResponse = await axios.get(`http://localhost:8080/orders/${id}/details`, {
+                const orderResponse = await axios.get(`http://localhost:8080/orders/${id}/details-user`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

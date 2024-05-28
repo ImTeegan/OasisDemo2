@@ -7,10 +7,10 @@ const ProfileSidebar: React.FC = () => {
     const location = useLocation();
 
     return (
-        <div className="sidebar">
+        <div className="sidebar1">
             <ul>
                 <li className={location.pathname === '/profile-info' ? 'active' : ''}>
-                    <Link to="/profile-info">Información del perfil</Link>
+                    <Link to="/profile-info">Perfil</Link>
                 </li>
                 <li className={location.pathname === '/profile-wishlist' ? 'active' : ''}>
                     <Link to="/profile-wishlist">Lista de deseos</Link>

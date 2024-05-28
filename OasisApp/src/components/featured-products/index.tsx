@@ -1,11 +1,10 @@
 // src/components/featured-products/index.tsx
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Product } from '../../types/types';
-import { fetchProducts } from '../../services/fetchProducts';
-import { useRecoilValue } from 'recoil';
-import { customProductIdState } from '../../atoms/customProductAtom';
 import axios from 'axios';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { customProductIdState } from '../../atoms/customProductAtom';
+import { Product } from '../../types/types';
 import './styles.scss';
 
 const FeaturedProducts: React.FC = () => {
@@ -14,12 +13,13 @@ const FeaturedProducts: React.FC = () => {
     const [itemsToShow, setItemsToShow] = useState(3);
     const [showModal, setShowModal] = useState(true);
     const customProductId = useRecoilValue(customProductIdState);
+    const setCustomProductId = useSetRecoilState(customProductIdState);
 
     useEffect(() => {
         const loadProducts = async () => {
             try {
-                const fetchedProducts = await fetchProducts();
-                setProducts(fetchedProducts.slice(0, 6));
+                const response = await axios.get('http://localhost:8080/products');
+                setProducts(response.data.slice(0, 6));
             } catch (error) {
                 console.error('Failed to fetch products', error);
             }
@@ -79,11 +79,11 @@ const FeaturedProducts: React.FC = () => {
                 <button onClick={handlePrevClick} disabled={currentIndex === 0}>&lt;</button>
                 <div className='featuredProducts__cards' style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
                     {products.map((product, index) => (
-                        <div className='featuredProducts__cards__card' key={product.id} style={{ backgroundImage: `url(${product.image1})` }}>
+                        <div className='featuredProducts__cards__card' key={product.id} style={{ backgroundImage: `url(${product.imageUrl})` }}>
                             <Link className='Linkito' to={`/product-details/${product.id}`}>
                                 <div className='featuredProducts__cards__card__sale'>Más vendido</div>
                                 <div className='card-content'>
-                                    <h2 className='tituloCard'>{product.productName}</h2>
+                                    <h2 className='tituloCard'>{product.name}</h2>
                                     <p className='descCard'>{product.description}</p>
                                 </div>
                             </Link>

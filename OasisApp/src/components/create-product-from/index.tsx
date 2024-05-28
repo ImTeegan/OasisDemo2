@@ -1,4 +1,3 @@
-// src/views/OrderDashboard/OrderDashboard.tsx
 import React, { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { userState } from '../../atoms/sessionState';
@@ -20,6 +19,7 @@ const CreateProduct: React.FC = () => {
     const [price, setPrice] = useState('');
     const [image, setImage] = useState<File | null>(null);
     const [error, setError] = useState('');
+    const [showNotification, setShowNotification] = useState(false);
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -52,7 +52,8 @@ const CreateProduct: React.FC = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            alert('Producto creado exitosamente');
+            setShowNotification(true);
+            setTimeout(() => setShowNotification(false), 3000); // Notificación visible por 3 segundos
         } catch (err) {
             console.error('Error al crear el producto:', err);
             setError('Error al crear el producto.');
@@ -68,7 +69,7 @@ const CreateProduct: React.FC = () => {
             <Sidebar />
             <div className="dashboard-content">
                 <h1>Crear Producto</h1>
-                <form onSubmit={handleSubmit} className="create-product-form">
+                <form onSubmit={handleSubmit} className="edit-product-form">
                     <div className="form-group">
                         <label htmlFor="type">Tipo:</label>
                         <select id="type" value={type} onChange={(e) => setType(e.target.value)}>
@@ -124,6 +125,11 @@ const CreateProduct: React.FC = () => {
                     {error && <p className="error-message">{error}</p>}
                     <button type="submit" className="submit-button">Crear</button>
                 </form>
+                {showNotification && (
+                    <div className={`notification ${showNotification ? 'show' : ''}`}>
+                        Producto creado exitosamente
+                    </div>
+                )}
             </div>
         </div>
     );

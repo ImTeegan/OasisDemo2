@@ -118,14 +118,17 @@ const PaymentForm = ({ onPrevious, shippingData }) => {
                     },
                 });
 
-                setShowLoadingModal(false);
-                setShowThankYouModal(true);
-
                 setTimeout(() => {
-                    setShowThankYouModal(false);
-                    resetCart();
-                    navigate('/');
-                }, 5000);
+                    setShowLoadingModal(false);
+                    setShowThankYouModal(true);
+
+                    setTimeout(() => {
+                        setShowThankYouModal(false);
+                        resetCart();
+                        navigate('/');
+                    }, 3000);
+
+                }, 3000);
 
             } catch (error) {
                 console.error('Failed to place order:', error);
